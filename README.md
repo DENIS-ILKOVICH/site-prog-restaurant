@@ -52,10 +52,11 @@ The system provides an elegant, adaptive interface and serves as a real-world MV
 - **Backend:** Python, Flask
 - **Frontend:** HTML5, CSS3, JavaScript
 - **Database:** SQLite
-- **Additional:** animations, responsive design
+- **Additional:** animations, responsive design  
 
 Next, I will demonstrate the detailed structure of the project and showcase  
 screenshots of the web application.
+
 ---
 
 ## Available Pages [⬆](#table-of-contents "Back to Top")

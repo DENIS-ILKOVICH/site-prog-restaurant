@@ -1,0 +1,188 @@
+{% extends 'admin/base_admin.html' %}
+
+{%block content %}
+<form class="logout-fr" action="{{url_for('.logout')}}" method="post">
+    <button class="logout-bt" type="submit">Return to main page</button>
+</form>
+<hr>
+<div class="editor-buttons">
+    <button class="open-add-new-dish">Add new dish</button>
+    <button class="open-add-discount-dish">Add discount</button>
+</div>
+
+<div class="modal add-new-dish-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="dish-grid">
+            {% if new_dish_list %}
+            {% for item in new_dish_list %}
+            <div class="dish-item">
+                <form action="{{ url_for('.add_new_dish', dish_id=item.dish_id) }}" method="post"
+                      class="change-new-dish-form">
+                    <button type="submit" class="dish-button">
+                        <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}">
+                    </button>
+                </form>
+                <p class="dish-name">{{ item.name }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="modal add-discount-dish-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="dish-grid">
+            {% if dis_dish_list %}
+            {% for item in dis_dish_list %}
+            <div class="dish-item">
+                <form action="{{ url_for('.add_discount_dish', dish_id=item.dish_id) }}" method="post"
+                      class="change-new-dish-form">
+                    <input type="text" name="discount" placeholder="Discount %" class="discount-input">
+                    <button type="submit" class="dish-button">
+                        <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}">
+                    </button>
+                </form>
+                <p class="dish-name">{{ item.name }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<hr>
+<h1 align="center">Special offers</h1>
+<div class="special-offers-container">
+    <div class="discounts-list">
+        <h3 class="special-section-title">Discounts up to {{mx_discount}}%</h3>
+        <div class="special-discount-cards">
+            {% if discounts %}
+            {% for item in discounts_list %}
+            {% for dis in discounts %}
+            {% if item.dish_id == dis.dish_id %}
+            <div class="special-card" data-dish-id="{{ item.dish_id }}" data-dish-name="{{ item.name }}"
+                 data-image-url="{{ url_for('image_dish', dish_id=item.dish_id) }}">
+                <form action="{{url_for('.remove_discount_dish', dish_id=item.dish_id)}}" method="post"
+                      class="remove-discount-dish">
+                    <input type="submit" value="×">
+                </form>
+                <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}"
+                     class="special-card-image">
+                <p class="special-discount-text">Discount {{ dis.discount }}%</p>
+                <h4 class="special-card-title">{{ item.name }}</h4>
+                <p class="special-original-price">Price: <span class="original">{{ '{:.2f}'.format(item.price) }}</span>
+                </p>
+                <p class="special-discount-price">Discounted price: <span class="discount">{{ '{:.2f}'.format(item.disc_price|int) }}</span>
+                </p>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="slider">
+        <h3 class="special-section-title">New items</h3>
+        <div class="slider-container">
+            {% if new_pr %}
+            <div class="special-slides">
+                {% for item in new_pr %}
+                <div class="special-slide">
+                    <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}"
+                         class="special-dish-image">
+                    <div class="special-dish-info">
+                        <h4 class="special-dish-name">{{ item.name }}</h4>
+                        <p class="special-dish-price">Price: {{ '{:.2f}'.format(item.dis_price|int) }}</p>
+                    </div>
+                    <form action="{{url_for('.remove_new_dish', dish_id=item.dish_id)}}" method="post"
+                          class="remove-discount-dish">
+                        <input type="submit" value="×">
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="special-slider-button prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="special-slider-button next" onclick="changeSlide(1)">&#10095;</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+const openAddNewDishButton = document.querySelector(".open-add-new-dish");
+const openAddDiscountDishButton = document.querySelector(".open-add-discount-dish");
+const addNewDishModal = document.querySelector(".add-new-dish-modal");
+const addDiscountDishModal = document.querySelector(".add-discount-dish-modal");
+const closeModalButtons = document.querySelectorAll(".close-modal");
+
+openAddNewDishButton.addEventListener("click", () => {
+    addNewDishModal.classList.add("show");
+});
+openAddDiscountDishButton.addEventListener("click", () => {
+    addDiscountDishModal.classList.add("show");
+});
+
+closeModalButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        addNewDishModal.classList.remove("show");
+        addDiscountDishModal.classList.remove("show");
+    });
+});
+
+window.addEventListener("click", event => {
+    if (event.target === addNewDishModal) {
+        addNewDishModal.classList.remove("show");
+    } else if (event.target === addDiscountDishModal) {
+        addDiscountDishModal.classList.remove("show");
+    }
+});
+
+</script>
+<script>
+    let currentSlideIndex = 0;
+
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.special-slide');
+
+        slides[currentSlideIndex].style.display = 'none';
+
+        currentSlideIndex = (currentSlideIndex + direction + slides.length) % slides.length;
+
+        slides[currentSlideIndex].style.display = 'block';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.special-slide');
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
+        });
+
+        document.querySelectorAll('.special-card').forEach(card => {
+            const dishId = card.getAttribute('data-dish-id');
+            const dishName = card.getAttribute('data-dish-name');
+            const imageUrl = card.getAttribute('data-image-url');
+
+            card.addEventListener('click', () => addToCart(dishId, dishName, imageUrl));
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        anime({
+            targets: '.special-card',
+            opacity: [0, 1],
+            translateY: [50, 0],
+            delay: anime.stagger(100),
+            duration: 800,
+            easing: 'easeOutQuad'
+        });
+    });
+</script>
+
+{% endblock %}

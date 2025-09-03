@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1 align="center">Page not found</h1>
+<p style="text-align: center; font-size: 18px; margin: 20px 0;">
+    Page not found, return to the
+    <a href="{{href1}}" style="color: #ffd900; text-decoration: none;"> home</a>
+    page
+    {% if current_user.is_authenticated %}
+    or profile: <a href="{{href2}}" style="color: #ffd900; text-decoration: none;">{{current_user.get_name()}}</a></p>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+<p>Error 404</p>
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'admin/base_admin.html' %}
+{% block content %}
+<button id="toggle-dish-form" class="toggle-button">Add Dish</button>
+
+<div id="add-dish-form" class="add-dish" style="display: none;">
+    <h2 align="center">Add Dish</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        <p><label>Dish Category: </label>
+            <select id="dish" name="category">
+                {% if select %}
+                    {% for item in select %}
+                        <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </p>
+
+        <p><label for="name">Dish Name: </label>
+            <input type="text" id="name" name="name" value="" required/></p>
+
+        <p><label for="file">Image: </label>
+            <input type="file" id="file" name="file" class="file-input" required/></p>
+
+        <p><label for="price">Price: </label>
+            <input type="text" id="price" name="price" value="" required/></p>
+
+        <p><label for="description">Description: </label>
+            <textarea id="description" name="description" rows="7" cols="40"></textarea></p>
+
+        <p><input type="submit" value="Add Dish"/></p>
+
+        {% for cat, m in get_flashed_messages(True) %}
+            <div class="message {{ cat }}">{{ m }}</div>
+        {% endfor %}
+    </form>
+</div>
+
+<script>
+document.getElementById("toggle-dish-form").addEventListener("click", function() {
+    var form = document.getElementById("add-dish-form");
+
+    if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block";
+        form.style.opacity = 0;
+        let fadeEffect = setInterval(function () {
+            if (!form.style.opacity) form.style.opacity = 0;
+            if (form.style.opacity < 1) form.style.opacity = parseFloat(form.style.opacity) + 0.1;
+            else clearInterval(fadeEffect);
+        }, 50);
+    } else {
+        let fadeEffect = setInterval(function () {
+            if (!form.style.opacity) form.style.opacity = 1;
+            if (form.style.opacity > 0) form.style.opacity = parseFloat(form.style.opacity) - 0.1;
+            else {
+                clearInterval(fadeEffect);
+                form.style.display = "none";
+            }
+        }, 50);
+    }
+});
+</script>
+
+<div id="dish-container" class="dish-container">
+    <h2 align="center">Dish List</h2>
+    <div class="dish-search">
+        <form action="" method="post">
+            <input type="text" name="s_dish" placeholder="Search">
+            <input type="submit" value="Search">
+        </form>
+        <form action="">
+            <input type="submit" value="&times;">
+        </form>
+    </div>
+
+    {% if dishes %}
+    <div class="dish-list">
+        {% for item in dishes %}
+        <div class="dish-item">
+            <div class="dish-item-header">
+                <img src="{{ url_for('.image_dish', dish_id=item.dish_id) }}" alt="Dish Image" class="dish-image"
+                     onclick="document.getElementById('file-{{ item.dish_id }}').click();">
+            </div>
+
+            <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" enctype="multipart/form-data" method="POST" class="change_dish">
+                <label class="file-label" for="file-{{ item.dish_id }}"></label>
+                <input type="file" id="file-{{ item.dish_id }}" name="file" class="file-input" onchange="this.form.submit();" style="display: none;">
+                <input type="submit" value="Change" style="display: none;">
+            </form>
+
+            <form action="{{ url_for('.delete_dish', dish_id=item.dish_id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="delete-btn">&times;</button>
+            </form>
+
+            <div class="dish-item-body">
+                <h2 class="editable" data-id="{{ item.dish_id }}" data-field="name">{{ item.name }}</h2>
+                <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" method="POST" class="change_dish">
+                    <input type="text" id="name-{{ item.dish_id }}" name="name" value="{{ item.name }}" class="editable-input" style="display: none;">
+                </form>
+
+                <p class="editable" data-id="{{ item.dish_id }}" data-field="description">{{ item.description }}</p>
+                <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" method="POST" class="change_dish">
+                    <input type="text" id="description-{{ item.dish_id }}" name="description" class="editable-input" style="display: none;">
+                </form>
+
+                <p class="editable price" data-id="{{ item.dish_id }}" data-field="price">{{ item.price }}</p>
+                <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" method="POST" class="change_dish">
+                    <input type="text" id="price-{{ item.dish_id }}" name="price" value="{{ item.price }}" class="editable-input" style="display: none;">
+                </form>
+
+                {% if item.status == '1' %}
+                <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" method="POST" class="change_dish">
+                    <input type="submit" name="status_off" value="Hide">
+                </form>
+                {% else %}
+                <form action="{{ url_for('.change_dish', dish_id=item.dish_id) }}" method="POST" class="change_dish">
+                    <input type="submit" name="status_on" value="Show">
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2>No Dishes</h2>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editableElements = document.querySelectorAll('.editable');
+
+    editableElements.forEach(element => {
+        element.addEventListener('click', function() {
+            const field = this.getAttribute('data-field');
+            const id = this.getAttribute('data-id');
+
+            this.style.display = 'none';
+            const form = this.nextElementSibling;
+            const input = form.querySelector(`[name=${field}]`);
+            if (input) {
+                input.style.display = 'block';
+                input.focus();
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            const dishItems = document.querySelectorAll('.dish-item');
+            let clickedInsideDishItem = false;
+
+            dishItems.forEach(item => {
+                if (item.contains(event.target)) clickedInsideDishItem = true;
+            });
+
+            if (!clickedInsideDishItem) {
+                const inputs = document.querySelectorAll('.editable-input');
+                inputs.forEach(input => {
+                    if (input.style.display === 'block') {
+                        const form = input.closest('form');
+                        let isFormValid = true;
+
+                        const formInputs = form.querySelectorAll('[name]');
+                        formInputs.forEach(formInput => {
+                            if (!formInput.value.trim()) isFormValid = false;
+                        });
+
+                        if (isFormValid) form.submit();
+
+                        input.style.display = 'none';
+                        const p = document.querySelector(`.editable[data-id="${input.id.split('-')[1]}"][data-field="${input.name}"]`);
+                        if (p) p.style.display = 'block';
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

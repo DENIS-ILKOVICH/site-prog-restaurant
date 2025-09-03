@@ -1,0 +1,448 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="fixed-button" id="toggleButton" onclick="toggleBestDish()">
+    <span class="button-text">Popular</span>
+    <span class="cross-icon">×</span>
+</div>
+
+<div class="best-dish-container" id="bestDishContainer">
+    <div class="best-dish">
+        {% if best_list %}
+        {% for item in best_list[:5] %}
+        {% if item.status == '1' %}
+        <div class="best-dish-card" data-id="{{ item.dish_id }}" data-description="{{ item.description }}">
+            <div class="best-dish-image"
+                 style="background-image: url('{{ url_for('image_dish', dish_id=item.dish_id) }}');"></div>
+            <div class="overlay">
+                <div class="best-dish-info">
+                    <h2 class="best-dish-name">{{ item.name }}</h2>
+                    <p class="best-dish-price">{{ '{:.2f}'.format(item.price) }}</p>
+                </div>
+                <div class="like-section">
+                    {% if current_user.is_authenticated %}
+                    <button class="best-like-button" data-id="{{ item.dish_id }}"
+                            data-liked="{{ 'true' if item.user_liked else 'false' }}">
+                        <span class="best-like-icon {% if item.user_liked %}liked{% endif %}">&#x2764;</span>
+                        <span class="best-like-count">{{ item.likes_count }}</span>
+                    </button>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="like-button">
+                        <span class="best-like-icon">&#x2764;</span>
+                        <span class="best-like-count">{{ item.likes_count }}</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% if current_user.is_authenticated %}
+            <form action="{{ url_for('add_to_cart', dish_id=item.dish_id) }}" method="POST">
+                <input type="hidden" name="search" value="{{ search_query }}">
+                <input type="number" name="quantity" value="1" min="1">
+                <button type="submit" class="best-add-to-cart-button"><img width="100" height="100"
+                                                                           src="{{url_for('static', filename='images/cart.png')}}">
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+    function toggleBestDish() {
+    const container = document.getElementById('bestDishContainer');
+    const button = document.getElementById('toggleButton');
+
+    if (container.classList.contains('hide') || !container.classList.contains('show')) {
+        container.classList.remove('hide');
+        container.classList.add('show');
+
+        button.classList.add('active');
+
+        setTimeout(() => {
+            container.style.display = 'block';
+        }, 0);
+    } else {
+        container.classList.remove('show');
+        container.classList.add('hide');
+
+        button.classList.remove('active');
+
+        container.addEventListener('transitionend', () => {
+            if (!container.classList.contains('show')) {
+                container.style.display = 'none';
+            }
+        }, { once: true });
+    }
+}
+
+</script>
+
+
+<h2 align="center">Dish List</h2>
+<hr>
+<div class="page-container">
+    <aside class="sort-container">
+        {% if sort %}
+        {%if 'sorted' in dishes%}
+        <form id='reviewForm1' action="" class="sort-default-href-btn">
+            <input type="submit" name="Cancel" value="{{sort_type}}: {{(dishes | length) - 1}}">
+            <span class="close-btn-sort">&times;</span>
+        </form>
+        {%endif%}
+        <br>
+        <h3 align="center" class="toggle-button">Dish Categories</h3>
+        <hr>
+        <div id="hidden-content" class="hidden-content">
+            {% for item in sort[:-2] %}
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="{{ item }}" value="{{ item }}">
+            </form>
+            {% endfor %}
+            <div class="custom-select">
+                <div class="select-trigger">Drinks</div>
+                <ul class="select-options">
+                    <li class="select-option" data-value="Hot drinks">Hot</li>
+                    <li class="select-option" data-value="Cold drinks">Cold</li>
+                </ul>
+            </div>
+
+            <form action="" method="post" class="sort-dishes" id="drink-form">
+                <input type="hidden" name="Drinks" id="selected-drink" value="">
+            </form>
+        </div>
+
+        <br>
+        <h3 align="center" class="toggle-button filter-title">Filters</h3>
+        <hr>
+        <div class="filter-content">
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="Popular" value="Popular">
+            </form>
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="Discounted" value="Discounted">
+            </form>
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="New dishes" value="New dishes">
+            </form>
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="Expensive first" value="Expensive first">
+            </form>
+            <form action="" method="post" class="sort-dishes">
+                <input type="submit" name="Cheap first" value="Cheap first">
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const toggleButtons = document.querySelectorAll('.toggle-button');
+
+                toggleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const content = this.nextElementSibling.nextElementSibling;
+
+                        if (content.style.height === "0px" || content.style.height === "") {
+                            content.style.display = 'block';
+                            const height = content.scrollHeight + 'px';
+                            content.style.height = height;
+                        } else {
+                            content.style.height = '0';
+                            setTimeout(() => {
+                                content.style.display = 'none';
+                            }, 500);
+                        }
+                    });
+                });
+            });
+        </script>
+        {% endif %}
+    </aside>
+
+
+    <section class="dishes-container">
+        {% if dishes %}
+        {% for item in dishes %}
+        {% if item.status == '1' %}
+        <div class="dish-card" data-id="{{ item.dish_id }}" data-description="{{ item.description }}">
+            <img class="dish-image" src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="dish image">
+            <div class="dish-info">
+                <h2 class="dish-name">{{ item.name }}</h2>
+                <div class="like-section">
+                    {% if current_user.is_authenticated %}
+                    <button class="like-button" data-id="{{ item.dish_id }}"
+                            data-liked="{{ 'true' if item.user_liked else 'false' }}">
+                        <span class="like-icon {% if item.user_liked %}liked{% endif %}">&#x2764;</span>
+                        <span class="like-count">{{ item.likes_count }}</span>
+                    </button>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="like-button">
+                        <span class="like-icon">&#x2764;</span>
+                        <span class="like-count">{{ item.likes_count }}</span>
+                    </a>
+                    {% endif %}
+                </div>
+
+                {%if item.dis_price%}
+                <p class="dish-price">{{ '{:.2f}'.format(item.dis_price|int)}}</p>
+                {%else%}
+                <p class="dish-price">{{ '{:.2f}'.format(item.price)}}</p>
+                {%endif%}
+
+                {% if current_user.is_authenticated %}
+                <form action="{{ url_for('add_to_cart', dish_id=item.dish_id) }}" method="POST">
+                    <input type="hidden" name="search" value="{{ search_query }}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Add to cart</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <h2>No dishes</h2>
+        {% endif %}
+    </section>
+
+
+</div>
+
+
+<div id="dish-detail" class="dish-detail">
+    <button id="close-detail" class="close-detail">&times;</button>
+    <img id="detail-image" src="" alt="dish image">
+    <h2 id="detail-name"></h2>
+
+    <p id="detail-price"></p>
+
+    <p id="detail-description"></p>
+
+    {% if current_user.is_authenticated %}
+    <form id="add-to-cart-form" action="" method="POST">
+        <div class="quantity-input-container">
+            <button type="button" class="quantity-button" id="decrease">-</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+            <button type="button" class="quantity-button" id="increase">+</button>
+        </div>
+        <button type="submit">Add to cart</button>
+    </form>
+    {% endif %}
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dishCards = document.querySelectorAll('.dish-card');
+        const dishDetail = document.getElementById('dish-detail');
+        const closeDetail = document.getElementById('close-detail');
+        const addToCartForm = document.getElementById('add-to-cart-form');
+        const quantityInput = document.getElementById('quantity');
+        const increaseButton = document.getElementById('increase');
+        const decreaseButton = document.getElementById('decrease');
+
+    dishCards.forEach(card => {
+        const image = card.querySelector('.dish-image');
+        image.addEventListener('click', () => {
+            const imageSrc = image.src;
+            const name = card.querySelector('.dish-name').innerText;
+            const price = card.querySelector('.dish-price').innerText;
+            const description = card.getAttribute('data-description');
+            const formAction = card.querySelector('form')?.action;
+
+            document.getElementById('detail-image').src = imageSrc;
+            document.getElementById('detail-name').innerText = name;
+            document.getElementById('detail-price').innerText = price;
+            document.getElementById('detail-description').innerText = description;
+
+            if (addToCartForm) {
+                addToCartForm.action = formAction;
+            }
+
+            dishDetail.classList.add('show');
+        });
+    });
+
+        closeDetail.addEventListener('click', () => {
+            dishDetail.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === dishDetail) {
+                dishDetail.classList.remove('show');
+            }
+        });
+
+        if (increaseButton && decreaseButton && quantityInput) {
+            increaseButton.addEventListener('click', () => {
+                let currentValue = parseInt(quantityInput.value, 10);
+                quantityInput.value = currentValue + 1;
+            });
+
+            decreaseButton.addEventListener('click', () => {
+                let currentValue = parseInt(quantityInput.value, 10);
+                if (currentValue > parseInt(quantityInput.min, 10)) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+        }
+
+        const ANIMATION_INTERVAL = 500;
+        const lastAnimationTime = localStorage.getItem('lastAnimationTime');
+        const currentTime = Date.now();
+
+        if (!lastAnimationTime || (currentTime - lastAnimationTime) > ANIMATION_INTERVAL) {
+            dishCards.forEach((dish, index) => {
+                setTimeout(() => {
+                    dish.classList.add('fade-in');
+                }, index * 100);
+            });
+            localStorage.setItem('lastAnimationTime', currentTime);
+        } else {
+            dishCards.forEach(dish => {
+                dish.classList.add('fade-in');
+            });
+        }
+
+        const selectTrigger = document.querySelector('.select-trigger');
+        const selectOptions = document.querySelectorAll('.select-option');
+        const form = document.getElementById('drink-form');
+        const hiddenInput = document.getElementById('selected-drink');
+
+        selectTrigger.addEventListener('click', () => {
+            selectTrigger.parentElement.classList.toggle('active');
+        });
+
+        selectOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                selectTrigger.textContent = option.textContent;
+                hiddenInput.value = value;
+                selectTrigger.parentElement.classList.remove('active');
+                form.submit();
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!selectTrigger.contains(e.target) && !selectTrigger.parentElement.contains(e.target)) {
+                selectTrigger.parentElement.classList.remove('active');
+            }
+        });
+
+    });
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/get_likes_count')
+        .then(response => response.json())
+        .then(data => {
+            const likeButtons = document.querySelectorAll('.like-button');
+            likeButtons.forEach(button => {
+                const dishId = button.getAttribute('data-id');
+                const likeCountElement = button.querySelector('.like-count');
+
+                if (data[dishId] !== undefined) {
+                    likeCountElement.textContent = data[dishId];
+                }
+            });
+        })
+        .catch(error => console.error('Error:', error));
+
+        const likeButtons = document.querySelectorAll('.like-button');
+        likeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dishId = button.getAttribute('data-id');
+                const isLiked = button.getAttribute('data-liked') === 'true';
+                const likeCountElement = button.querySelector('.like-count');
+
+                fetch(`/toggle_like/${dishId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ liked: !isLiked })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    likeCountElement.textContent = data.likes_count;
+                    button.setAttribute('data-liked', data.user_liked);
+                    if (data.user_liked) {
+                        button.querySelector('.like-icon').classList.add('liked');
+                    } else {
+                        button.querySelector('.like-icon').classList.remove('liked');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    let currentSlide = 0;
+    const track = document.querySelector('.slider-track');
+    const slides = document.querySelectorAll('.slider-card');
+    const prevButton = document.querySelector('.slider-prev');
+    const nextButton = document.querySelector('.slider-next');
+    const totalSlides = slides.length;
+
+    function updateSliderPosition() {
+        const sliderWidth = slides[0].offsetWidth;
+        track.style.transform = `translateX(-${currentSlide * sliderWidth}px)`;
+    }
+
+    nextButton.addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSliderPosition();
+    });
+
+    prevButton.addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSliderPosition();
+    });
+
+    window.addEventListener('resize', updateSliderPosition);
+
+    document.querySelectorAll('.slider-like-button').forEach(button => {
+        button.addEventListener('click', function () {
+            const dishId = this.getAttribute('data-id');
+            const isLiked = this.getAttribute('data-liked') === 'true';
+
+            const likeIcon = this.querySelector('.slider-like-icon');
+            const likeCount = this.querySelector('.slider-like-count');
+
+            if (isLiked) {
+                likeIcon.classList.remove('slider-liked');
+                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                this.setAttribute('data-liked', 'false');
+            } else {
+                likeIcon.classList.add('slider-liked');
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                this.setAttribute('data-liked', 'true');
+            }
+        });
+    });
+});
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const defaultHrefBtn = document.querySelector('.sort-default-href-btn');
+  const reviewForm = document.getElementById('reviewForm1');
+
+  defaultHrefBtn.addEventListener('click', function() {
+    reviewForm.submit();
+  });
+});
+
+</script>
+{% endblock %}
+
+{% block footer %}
+<p>Dish List</p>
+{% endblock%}

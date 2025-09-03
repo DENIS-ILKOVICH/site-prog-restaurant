@@ -1,0 +1,91 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<div class="reviews-container">
+    <h2 class="review-title">Reviews: {{ reviews | length }}</h2>
+
+    <div class="sort-buttons-container">
+        <form action="" method="post" class="sort-asc">
+            <button type="submit" name="sort_asc" class="sort-button sort-asc-button"></button>
+        </form>
+
+        <form action="" method="post" class="sort-desc">
+            <button type="submit" name="sort_desc" class="sort-button sort-desc-button"></button>
+        </form>
+    </div>
+
+    {% if reviews %}
+    {% for item in reviews %}
+    <div class="reviews-list">
+        <p class="pp">Review ID: {{ item.id }}</p>
+        <div class="review-item">
+            <div class="user-review-info">
+                <div class="user-avatar">
+                    <img width="100" height="100" src="{{ url_for('get_avatar', review_id=item.id) }}" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <p>User ID: {{ item.id_user }}</p>
+                    <p>{{ item.name }}</p>
+                    <p>{{ item.email }}</p>
+                    <p>{{ item.time }}</p>
+                </div>
+            </div>
+
+            <div class="star-rating">
+                {% if item.rating %}
+                {% for i in range(1, 6) %}
+                <span class="star{% if i <= item.rating %} filled{% endif %}">&#9733;</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="user-message">
+                <p>{{ item.message }}</p>
+            </div>
+
+            <form action="{{ url_for('.review_remove', id_review=item.id) }}" method="post" class="reviews-del">
+                <button type="submit" class="delete-button-review">Delete</button>
+            </form>
+
+            <div class="reply-section">
+                <form action="{{ url_for('.reply_reviews') }}" method="post" class="reply-to-review">
+                    <input type="hidden" name="id_user" value="{{ item.id_user }}">
+                    <input type="hidden" name="id_review" value="{{ item.id }}">
+                    <input type="hidden" name="name" value="{{ item.name }}">
+                    <input type="hidden" name="email" value="{{ item.email }}">
+
+                    <input type="text" name="reply" placeholder="Enter reply">
+                    <button type="submit" class="send-button">Send</button>
+                </form>
+
+                <div class="reply-reviews-list">
+                    {% if reply_list %}
+                    {% for rep in reply_list %}
+                    {% if rep.id_review == item.id %}
+                    <div class="admin-reply">
+                        <div class="admin-avatar">
+                            <img src="/admin/static/images/admin_avatar.png" alt="Admin Avatar">
+                        </div>
+                        <div class="admin-details">
+                            <p class="admin-name">SITEPROGRESTAURANT</p>
+                            <p class="reply-time">{{ rep.time }}</p>
+                            <p class="admin-message">{{ rep.message }}</p>
+                        </div>
+                    </div>
+
+                    <form action="{{ url_for('.reply_remove', id_reply=rep.id) }}" method="post" class="reply-del">
+                        <button type="submit" class="delete-button-review">Delete</button>
+                    </form>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h2 class="review-title">No Reviews</h2>
+    {% endif %}
+</div>
+{% endblock %}

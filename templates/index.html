@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% if session.get('style', 0) == 1 %}
+    <link id="theme-stylesheet" type="text/css" href="{{ url_for('static', filename='css/dark-style.css') }}?v={{ session['style'] }}" rel="stylesheet">
+    {% else %}
+    <link id="theme-stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}?v={{ session['style'] }}" rel="stylesheet">
+    {% endif %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/images/logo1.png" type="image/png">
+    {% block title %}
+    {% if title %}
+    <title>SiteProgRestaurant - {{ title }}</title>
+    {% else %}
+    <title>SiteProgRestaurant</title>
+    {% endif %}
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+<div class="container">
+    <header>
+        <p align="left"><a href="{{ url_for('index') }}"><img height="35" src="/static/images/logo_name3.png"></a>
+        <div class="header-nav">
+            <ul>
+                <li><a href="{{ url_for('special_pr') }}">Home</a></li>
+                <li><a href="{{ url_for('show_dishes') }}">Dish List</a></li>
+                <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="header-right">
+            {% if current_user.is_authenticated %}
+            <a class='open-cart' href="{{url_for('cart')}}">Cart</a>
+            {% endif %}
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <div class="menu-icon">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </button>
+                <div class="dropdown-content">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{url_for('profile')}}" class="dropdown-item">Profile</a>
+                    <a href="{{url_for('logout')}}" class="dropdown-item">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="dropdown-item">Login</a>
+                    <a href="{{ url_for('register') }}" class="dropdown-item">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+{% endblock %}
+
+<div class="content">
+    <main>
+        {% block content %}
+        {% endblock %}
+        <a href="#" class="scroll-to-top" title="To top">&#8679;</a>
+    </main>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">
+            <a href="{{url_for('index')}}"><img width="10%" src="/static/images/logo1.png" alt="Logo"/></a>
+        </div>
+        <div class="footer-text">
+            <p>{% block footer %}SiteProg{% endblock %}</p>
+        </div>
+        <div class="social-media">
+            <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                <img src="/static/images/facebook-icon.png" alt="Facebook"/>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+                <img src="/static/images/twitter-icon.png" alt="Twitter"/>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                <img src="/static/images/instagram-icon.png" alt="Instagram"/>
+            </a>
+            <a href="https://web.telegram.org/" target="_blank" aria-label="Telegram">
+                <img src="/static/images/telegram-icon.png" alt="Telegram"/>
+            </a>
+        </div>
+    </div>
+</footer>
+<script>
+        function changeStyle(theme) {
+            fetch('/style', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ [theme]: true })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const stylesheet = document.getElementById('theme-stylesheet');
+                if (data.style === 1) {
+                    stylesheet.href = "{{ url_for('static', filename='css/dark-style.css') }}?v=" + new Date().getTime();
+                } else {
+                    stylesheet.href = "{{ url_for('static', filename='css/style.css') }}?v=" + new Date().getTime();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdownButton = document.querySelector('.dropbtn');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        function openDropdown() {
+            dropdownContent.style.display = 'block';
+            dropdownContent.style.opacity = '1';
+        }
+
+        function closeDropdown() {
+            dropdownContent.style.opacity = '0';
+            setTimeout(() => {
+                dropdownContent.style.display = 'none';
+            }, 300);
+        }
+
+        dropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (dropdownContent.style.display === 'block') {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+                closeDropdown();
+            }
+        });
+
+        const cartModal = document.getElementById('cart-modal');
+        const openCartButton = document.getElementById('open-cart');
+        const closeModalButton = document.querySelector('.close-modal');
+
+        openCartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartModal.style.display = 'block';
+            cartModal.style.opacity = '1';
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            cartModal.style.opacity = '0';
+            setTimeout(() => {
+                cartModal.style.display = 'none';
+            }, 300);
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.opacity = '0';
+                setTimeout(() => {
+                    cartModal.style.display = 'none';
+                }, 300);
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.section-image, .section-text, .section-image-grid-container, .section-image-circle, .section-content');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        const scrollToTopButton = document.querySelector('.scroll-to-top');
+
+        if (scrollToTopButton) {
+            function handleScroll() {
+                if (window.scrollY > 300) {
+                    scrollToTopButton.classList.add('visible');
+                } else {
+                    scrollToTopButton.classList.remove('visible');
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            scrollToTopButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            handleScroll();
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<form action="{{url_for('contact_add')}}" method="post" class="contact">
+    <h2 align="center">Send a message to support</h2>
+    <hr>
+    <p><label for="username">Name:</label>
+        <input type="text" id="username" name="username" value="" required/></p>
+
+    <p><label for="mail">Email:</label>
+        <input type="text" id="mail" name="email" value="" required/></p>
+
+    <p><label for="message">Message:</label>
+        <textarea id="message" name="message" rows="7" cols="40"></textarea></p>
+
+    <p><input type="submit" value="Send"/></p>
+    {% if supportmsg %}
+        <input type="hidden" name="alias" value="{{ 'support_chat_' + ((supportmsg[0]['id'] + 1) | string) }}">
+    {% else %}
+        <input type="hidden" name="alias" value="contact">
+    {% endif %}
+
+    {% for cat, m in get_flashed_messages(True) %}
+    <div class="message {{ cat }}">{{ m }}</div>
+    {% endfor %}
+</form>
+
+{% if supportmsg %}
+<div class="supportmsg-container">
+    <h2 align="center">Request history</h2>
+    <div class="supportmsg-list">
+        {% for item in supportmsg %}
+        <div class="supportmsg-card">
+            <div class="supportmsg-header">
+                <p class="status {{ 'status-true' if item.status else 'status-false' }}">
+                    {{ 'Reviewed' if item.status else 'Pending review' }}
+                </p>
+                <p class="supportmsg-id">Request #{{ item.id }}</p>
+            </div>
+            <div class="supportmsg-body">
+                <p><strong>Name:</strong> {{ item.name }}</p>
+                <p><strong>Email:</strong> {{ item.email }}</p>
+                <p><strong>Time:</strong> {{ item.time }}</p>
+                <a href="{{url_for('contact_chat', alias='support_chat_' + item.id | string)}}" class="next-button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    Go to chat
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.supportmsg-card');
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
+{% endblock %}
+
+{% block footer %}
+<p>Feedback</p>
+{% endblock %}

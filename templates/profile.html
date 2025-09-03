@@ -1,0 +1,199 @@
+{% extends 'index.html' %}
+{% block content %}
+
+{% if orders_status %}
+<div class="order-message">
+    {% for item in orders_status %}
+    {% if 0 <= item.status <= 2 %}
+    <div class="order-item-message">
+        <div class="order-status-message">
+            {% if item.status == 0 %}
+            <p class="zakazan">Ordered</p>
+            {% endif %}
+            {% if item.status == 1 %}
+            <p class="delaetsya">In progress</p>
+            {% endif %}
+            {% if item.status == 2 %}
+            <p class="dostavka">Delivery</p>
+            {% endif %}
+            {% if item.status == 3 %}
+            <p class="oformlen">Completed</p>
+            {% endif %}
+        </div>
+        <div class="order-info-message">
+            <p><strong>Order #:</strong> {{ item.id }}</p>
+            <p><strong>Date:</strong> {{ item.time.replace('-', ' ')[:10] }}</p>
+            <p><strong>Time:</strong> {{ item.time.replace('-', ' ')[11:-3] }}</p>
+            <p><strong>Order details:</strong></p>
+            <p>{{ item.cart | safe }}</p>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+<style>
+    .order-message {
+        width: 100%;
+        max-width: 300px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        padding: 15px;
+        overflow: auto;
+        max-height: 80%;
+        transition: all 0.3s ease;
+        position: fixed;
+        top: 80px;
+        right: 10px;
+        margin: 0;
+    }
+
+    @media (max-width: 600px) {
+        .order-message {
+            position: static;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+        }
+    }
+
+    .order-item-message {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .order-status-message p {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .zakazan {
+        color: #007bff;
+    }
+
+    .delaetsya {
+        color: #ffc107;
+    }
+
+    .dostavka {
+        color: #28a745;
+    }
+
+    .oformlen {
+        color: #dc3545;
+    }
+
+    .order-info-message p {
+        margin: 5px 0;
+    }
+</style>
+<div class="profile-container">
+    <div class="user-info">
+        <h2>User Profile</h2>
+        <div class="user-details">
+            {% if user %}
+            <div class="profile-avatar">
+                <img width=100 height=100 src="{{url_for('userava')}}" alt="User Avatar">
+            </div>
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {% else %}
+            <p>User information not found.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="user-like-dish">
+        <h2>Favorite dishes</h2>
+        {% if like_dish %}
+        <div class="dish-slider">
+            <div class="dish-slider-container">
+                {% for item in like_dish %}
+                {% if item.status == '1' %}
+                <div class="dish-slide">
+                    <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" class="dish-img-like"
+                         alt="{{ item.name }}">
+                    <p class="dish-name-like">{{ item.name }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+                <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+            </div>
+            {% else %}
+            <h3>No favorite dishes.</h3>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="user-orders">
+        <h2>Your orders</h2>
+        <p>Total orders: {{orders | length}}
+            {% if orders %}
+            {% for item in orders %}
+        <div class="order-item">
+            <div class="order-status">
+                {% if item.status == 0 %}
+                <p class="zakazan">Ordered</p>
+                {% endif %}
+                {% if item.status == 1 %}
+                <p class="delaetsya">In progress</p>
+                {% endif %}
+                {% if item.status == 2 %}
+                <p class="dostavka">Delivery</p>
+                {% endif %}
+                {% if item.status == 3 %}
+                <p class="oformlen">Completed</p>
+                {% endif %}
+            </div>
+            <p><strong>Order #:</strong> {{ item.id }}</p>
+            <p><strong>Date:</strong> {{ item.time.replace('-', ' ')[:10] }}</p>
+            <p><strong>Time:</strong> {{ item.time.replace('-', ' ')[11:-3] }}</p>
+            <p><strong>Order details:</strong></p>
+            <p>{{ item.cart | safe }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>You have no active orders.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.dish-slide');
+        const totalSlides = slides.length;
+        const slidesToShow = 3;
+
+        if (index < 0) {
+            currentSlide = 0;
+        } else if (index + slidesToShow > totalSlides) {
+            currentSlide = totalSlides - slidesToShow;
+        } else {
+            currentSlide = index;
+        }
+
+        const sliderContainer = document.querySelector('.dish-slider-container');
+        sliderContainer.style.transform = `translateX(-${currentSlide * (100 / slidesToShow)}%)`;
+    }
+
+    function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+    }
+
+    showSlide(currentSlide);
+</script>
+{% endblock %}
+
+{% block footer %}
+<p>{{prof}}</p>
+{% endblock %}

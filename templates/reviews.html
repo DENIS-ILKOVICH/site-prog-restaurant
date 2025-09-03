@@ -1,0 +1,172 @@
+{% extends 'index.html' %}
+{% block content %}
+    <div class="reviews">
+        {% if btn_info[0] %}
+        {% if btn_info[0] == '1' or btn_info[0] == '2' %}
+        <h2>Reviews&nbsp;</h2> <span class="rating">★ {{ avg_reviews }}</span>
+        {% endif %}
+        {% else %}
+        <h2>Reviews ({{ reviews_list | length }})&nbsp;</h2> <span class="rating">★ {{ avg_reviews }}</span>
+        {% endif %}
+    </div>
+<div class="reviews-container">
+    <div class="add-reviews-container">
+        <h3 class="reviews-title">Add a Review</h3>
+        <form action="{{ url_for('add_reviews') }}" method="post" class="reviews-form">
+            <div class="star-rating">
+                <input type="radio" name="rating" value="5" id="star-5" class="star-input"/>
+                <label class="star" for="star-5">&#9733;</label>
+                <input type="radio" name="rating" value="4" id="star-4" class="star-input"/>
+                <label class="star" for="star-4">&#9733;</label>
+                <input type="radio" name="rating" value="3" id="star-3" class="star-input"/>
+                <label class="star" for="star-3">&#9733;</label>
+                <input type="radio" name="rating" value="2" id="star-2" class="star-input"/>
+                <label class="star" for="star-2">&#9733;</label>
+                <input type="radio" name="rating" value="1" id="star-1" class="star-input"/>
+                <label class="star" for="star-1">&#9733;</label>
+            </div>
+            <input type="text" name="reviews" placeholder="Your review..." required class="review-input">
+            <input type="submit" value="Submit" class="review-submit-button">
+        </form>
+    </div>
+
+    <div class="reviews-sort-container">
+        <button id="sort-btn" class="sort-button">
+            <img width="30" height="30" src="/static/images/это-моя-машина.png" alt="Sort Icon">
+            Sort
+        </button>
+        {% if btn_info %}
+        {% if btn_info[0] == '1' %}
+        <form id='reviewForm1' action="" class="default-href-btn">
+            <input type="submit" value="User rating: {{ btn_info[1] }}">
+            <span class="close-btn-sort">&times;</span>
+        </form>
+        {% endif %}
+        {% if btn_info[0] == '2' %}
+        <form id='reviewForm2' action="" class="default-href-btn">
+            <input type="submit" value="Your rating: {{ btn_info[1] }}">
+            <span class="close-btn-sort">&times;</span>
+        </form>
+        {% endif %}
+        {% endif %}
+        <div id="sort-modal" class="sort-modal hidden">
+            <div class="modal-content">
+                <span id="close-btn" class="close">&times;</span>
+                <h2>Filter Reviews</h2>
+                <hr>
+                <p>User Rating</p>
+                <form action="{{ url_for('reviews', index=1) }}" method="post" class="reviews-sort-option">
+                    <div class="star-selection">
+                        <input type="submit" name="1" value="★1" class="star-input" title="1 star">
+                        <input type="submit" name="2" value="★2" class="star-input" title="2 stars">
+                        <input type="submit" name="3" value="★3" class="star-input" title="3 stars">
+                        <input type="submit" name="4" value="★4" class="star-input" title="4 stars">
+                        <input type="submit" name="5" value="★5" class="star-input" title="5 stars">
+                    </div>
+                </form>
+                <div class="footer-buttons">
+                    <form action="{{ url_for('reviews', index=1) }}" class="reviews-sort-form-btn">
+                        <input type="submit" value="All Reviews" class="footer-button">
+                    </form>
+                    {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('reviews', index=2) }}" method="post" class="reviews-sort-btn">
+                        <input type="submit" name="my_reviews" value="My Reviews" class="footer-button">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-list">
+        {% if reviews_list %}
+        {% for item in reviews_list %}
+        <div class="review-block">
+            <div class="user-review-info">
+                <div class="user-avatar">
+                    <img src="{{ url_for('get_avatar', review_id=item.id) }}" alt="User Avatar">
+                </div>
+                <div class="user-details">
+                    <p class="user-name">{{ item.name }}</p>
+                    <p class="review-time">{{ item.time[:-3] }}</p>
+                </div>
+            </div>
+            <div class="star-rating">
+                {% if item.rating %}
+                {% for i in range(1, 6) %}
+                <span class="star{% if i <= item.rating %} filled{% endif %}">&#9733;</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <p class="message-review">{{ item.message }}</p>
+
+            <div class="reply-reviews-list">
+                {% if reply_list %}
+                {% for rep in reply_list %}
+                {% if rep.id_review == item.id %}
+                <div class="admin-reply">
+                    <div class="admin-avatar">
+                        <img src="/admin/static/images/admin_avatar.png" alt="Admin Avatar">
+                    </div>
+                    <div class="admin-details">
+                        <p class="admin-name">SITEPROGRESTAURANT</p>
+                        <p class="reply-time">{{ rep.time }}</p>
+                        <p class="admin-message">{{ rep.message }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h2>No reviews</h2>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sortBtn = document.getElementById('sort-btn');
+        const sortModal = document.getElementById('sort-modal');
+        const closeBtn = document.getElementById('close-btn');
+
+        sortBtn.addEventListener('click', function() {
+            sortModal.classList.toggle('hidden');
+        });
+
+        closeBtn.addEventListener('click', function() {
+            sortModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === sortModal) {
+                sortModal.classList.add('hidden');
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const defaultHrefBtn = document.querySelector('.default-href-btn');
+        const reviewForm = document.getElementById('reviewForm1');
+        defaultHrefBtn.addEventListener('click', function() {
+            reviewForm.submit();
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const defaultHrefBtn = document.querySelector('.default-href-btn');
+        const reviewForm = document.getElementById('reviewForm2');
+        defaultHrefBtn.addEventListener('click', function() {
+            reviewForm.submit();
+        });
+    });
+</script>
+{% endblock %}
+
+{% block footer %}
+<p>Reviews</p>
+{% endblock %}

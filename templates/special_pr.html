@@ -1,0 +1,229 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<h1 class="title">Special Offers</h1>
+<div class="special-container">
+    <div class="new-production">
+        <h3 class="special-section-title">New Dishes</h3>
+        <p class="special-section-description">Try our new dishes:</p>
+        <div class="slider">
+            {% if new_pr %}
+            <div class="special-slides">
+                {% for item in new_pr %}
+                <div class="special-slide">
+                    <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}"
+                         class="special-dish-image">
+                    <div class="special-dish-info">
+                        <h4 class="special-dish-name">{{ item.name }}</h4>
+                        <p class="special-dish-price">Price: {{ '{:.2f}'.format(item.dis_price|int)}}</p>
+                        {% if current_user.is_authenticated %}
+                        <button class="add-to-cart-button"
+                                onclick="addToCart({{ item.dish_id }}, '{{ item.dish_name }}', '{{ url_for('image_dish', dish_id=item.dish_id) }}')">
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="special-slider-button prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="special-slider-button next" onclick="changeSlide(1)">&#10095;</button>
+            {% endif %}
+        </div>
+        <br>
+        <hr>
+        <br>
+        <h3 class="special-section-title">Best Dishes</h3>
+        <p class="special-section-description">Try the dishes that many people liked:</p>
+        <div class="carousel-container">
+            {% if best_dish %}
+            <div class="carousel-track">
+                {% for item in best_dish[:6] %}
+                {% if item.status == '1' %}
+                <div class="carousel-slide">
+                    <div class="image-container">
+                        <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="Dish image">
+                        <div class="overlay">
+                            <div class="best-like-info">
+                                <span class="like-icon">&#x2764;</span>
+                                <span class="like-count">{{ item.likes_count }}</span>
+                            </div>
+                        </div>
+                        <div class="title-overlay">
+                            <h3 class="best-dish-name">{{ item.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="description-container">
+                        <p class="best-dish-description">{{ item.description }}</p>
+                        {% if current_user.is_authenticated %}
+                        <button class="add-to-cart-button-best"
+                                onclick="addToCart({{ item.dish_id }}, '{{ item.dish_name }}', '{{ url_for('image_dish', dish_id=item.dish_id) }}')">
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-button bestprev" onclick="moveSlide(-1)" aria-label="Previous">&#10094;</button>
+            <button class="carousel-button bestnext" onclick="moveSlide(1)" aria-label="Next">&#10095;</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="special-discounts-production">
+        <h3 class="special-section-title">Discounts up to {{mx_discount}}%</h3>
+        <p class="special-section-description">Try dishes with a pleasant discount:</p>
+        <div class="special-discount-cards">
+            {% if discounts %}
+            {% for item in discounts_list %}
+            {% for dis in discounts %}
+            {% if item.dish_id == dis.dish_id %}
+            <div class="special-card" data-dish-id="{{ item.dish_id }}" data-dish-name="{{ item.name }}"
+                 data-image-url="{{ url_for('image_dish', dish_id=item.dish_id) }}" style="cursor: pointer;">
+                <img src="{{ url_for('image_dish', dish_id=item.dish_id) }}" alt="{{ item.name }}"
+                     class="special-card-image">
+                <p class="special-discount-text">Discount {{ dis.discount }}%</p>
+                <h4 class="special-card-title">{{ item.name }}</h4>
+                <p class="special-original-price">Price: <span class="original">{{ '{:.2f}'.format(item.price) }}</span>
+                </p>
+                <p class="special-discount-price">Discounted price: <span class="discount">{{ '{:.2f}'.format(item.disc_price|int) }}</span>
+                </p>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div id="notification" class="notification">
+    <img id="notification-image" src="" alt="Dish Image">
+    <div class="notification-text" id="notification-text"></div>
+</div>
+
+<script>
+    let currentSlideIndex = 0;
+
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.special-slide');
+        slides[currentSlideIndex].style.display = 'none';
+        currentSlideIndex = (currentSlideIndex + direction + slides.length) % slides.length;
+        slides[currentSlideIndex].style.display = 'block';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.special-slide');
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
+        });
+    });
+</script>
+
+{% if current_user.is_authenticated %}
+<script>
+function addToCart(dishId, dishName, imageUrl) {
+    const formData = new FormData();
+    formData.append('quantity', 1);
+
+    fetch(`/add_to_cart/${dishId}`, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            showNotification(dishName, imageUrl);
+        } else {
+            console.error("Error adding to cart.");
+        }
+    })
+    .catch(error => console.error("Network error:", error));
+}
+
+function showNotification(dishName, imageUrl) {
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerHTML = `
+        <img src="${imageUrl}" alt="${dishName}" class="notification-image">
+        <div class="notification-content">
+            <p class="notification-title">Added to cart</p>
+            <p class="notification-dish-name">${dishName}</p>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.classList.add('show'), 10);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 500);
+    }, 2000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.special-card').forEach(card => {
+        const dishId = card.getAttribute('data-dish-id');
+        const dishName = card.getAttribute('data-dish-name');
+        const imageUrl = card.getAttribute('data-image-url');
+        card.addEventListener('click', () => addToCart(dishId, dishName, imageUrl));
+    });
+});
+</script>
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    anime({
+        targets: '.special-card',
+        opacity: [0, 1],
+        translateY: [50, 0],
+        delay: anime.stagger(100),
+        duration: 800,
+        easing: 'easeOutQuad'
+    });
+});
+</script>
+
+<style>
+.carousel-container { position: relative; width: 100%; max-width: 800px; margin: auto; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.carousel-track { display: flex; transition: transform 0.5s ease; }
+.carousel-slide { display: flex; flex-direction: column; flex: 0 0 50%; box-sizing: border-box; padding: 10px; }
+.image-container { position: relative; width: 100%; height: 200px; overflow: hidden; border-radius: 10px 10px 0 0; }
+.image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.image-container:hover img { transform: scale(1.05); }
+.overlay { position: absolute; top:0; left:0; right:0; bottom:0; background-color: rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; opacity:0; transition: opacity 0.3s ease; border-radius:10px 10px 0 0; }
+.image-container:hover .overlay { opacity:1; }
+.best-like-info { color:white; font-size:1.5em; display:flex; align-items:center; gap:5px; }
+.title-overlay { position:absolute; bottom:0px; left:1px; background-color: rgba(0,0,0,0.7); color:white; padding:5px 10px; }
+.description-container { position: relative; width:270px; height:200px; overflow-y:auto; border:1px solid #ccc; padding:10px; box-sizing:border-box; }
+.best-dish-description { margin:0; font-size:0.9em; color:#555; }
+.add-to-cart-button-best { position:absolute; background-color:transparent; border:none; border-radius:50%; width:40px; height:40px; padding:10px 15px; cursor:pointer; right:10px; bottom:10px; transition: transform 0.2s; }
+.add-to-cart-button-best:hover { transform: scale(1.1); }
+.add-to-cart-button-best i { color:#FFD700; font-size:24px; transition: color 0.3s; }
+.add-to-cart-button-best:hover i { color:#ffcc00; }
+.best-dish-name { font-size:1em; margin:0; }
+.carousel-button { position:absolute; top:50%; width:50px; height:50px; background-color:rgba(0,0,0,0.7); border:none; cursor:pointer; border-radius:5px; box-shadow:0 2px 10px rgba(0,0,0,0.2); color:#fff; transform:translateY(-10%); transition:background-color 0.3s, transform 0.2s; }
+.bestprev { left:10px; } .bestnext { right:5px; }
+.carousel-button:hover { background-color:rgba(0,0,0,1); transform:scale(1.1); }
+</style>
+
+<script>
+let currentIndex = 0;
+function moveSlide(direction) {
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+    const slideWidth = slides[0].offsetWidth;
+    currentIndex += direction;
+    if (currentIndex < 0) { currentIndex = totalSlides - 2; }
+    else if (currentIndex > totalSlides - 2) { currentIndex = 0; }
+    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+</script>
+
+{% endblock %}
+
+{% block footer %}
+<p>Special Offers</p>
+{% endblock %}

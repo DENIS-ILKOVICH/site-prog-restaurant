@@ -1,0 +1,80 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<a href="{{ url_for('.statistic') }}" class="back-button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"/>
+    </svg>
+    Back
+</a>
+
+<div class="finance-container">
+    <div class="statistic-sort">
+        <p>Sort Chart</p>
+        <div class="sort-buttons">
+            <form action="" method="post"><input type="submit" name="week" value="Week"></form>
+            <form action="" method="post"><input type="submit" name="month" value="Month"></form>
+            <form action="" method="post"><input type="submit" name="year" value="Year"></form>
+            <form action="" method="post"><input type="submit" name="alltime" value="All Time"></form>
+        </div>
+    </div>
+
+    <div class="finance-list">
+        {% if total %}
+        <ul>
+            <li>Total: {{ total }}</li>
+        </ul>
+        {% endif %}
+    </div>
+
+    <h2>Finance Chart</h2>
+    <canvas id="financeChart" width="400" height="200"></canvas>
+
+    <script>
+        const dates = {{ dates | tojson }};
+        const prices = {{ prices | tojson }};
+        const ctx = document.getElementById('financeChart').getContext('2d');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Order Amount by Day',
+                    data: prices,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock %}

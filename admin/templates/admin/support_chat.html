@@ -1,0 +1,79 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+
+{%if support_chat_list%}
+<div class="h1-container">
+    <div class="cell left">
+        <a href="{{url_for('.show_support')}}" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+    </div>
+    <div class="cell center">
+        <h1 class="h1-contact">Request #{{support_chat_list[0]['id_support']}}</h1>
+    </div>
+    <div class="cell right"></div>
+</div>
+
+<div id="chat-container" class="chat-container">
+    {% for item in support_chat_list %}
+    <div class="support-message {% if item.id_user != 0 %}user-message{% else %}admin-message{% endif %}">
+        <div class="message-content">
+            {% if item.id_user != 0 %}
+            <div class="contact-user-avatar">
+                <img width="40" height="40" src="{{ url_for('.get_user_avatar', user_id=item.id_user) }}"
+                     alt="User Avatar">
+            </div>
+            {% endif %}
+            <div class="message-text">
+                <p class="{% if item.name == 'admin' %}admin-name{% else %}name{% endif %}">{% if item.name == 'admin' %}SITEPROGRESTAURANT{% else %}{{ item.name }}{% endif %}</p>
+                <p class="time">{{ item.time }}</p>
+                <p class="text">{{ item.message }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    window.onload = function() {
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) {
+            const messages = chatContainer.getElementsByClassName('support-message');
+            if (messages.length > 0) {
+                messages[messages.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    };
+</script>
+
+{% if status == 0 %}
+<form class="reply_support_chat" action="{{url_for('.reply_message_support', alias=alias)}}" method="post">
+    <input type="hidden" name="id_support" value="{{support_chat_list[0]['id_support']}}">
+    <input type="text" name="message">
+    <input type="submit" value="Reply">
+</form>
+{%else%}
+<div class="h1-container">
+    <div class="cell left">
+        <a href="{{url_for('.show_support')}}" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+    </div>
+    <div class="cell center">
+        <h1 class="h1-contact">Request closed</h1>
+    </div>
+    <div class="cell right"></div>
+</div>
+{%endif%}
+{%endif%}
+
+{% endblock%}

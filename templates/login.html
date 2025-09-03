@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% block content %}
+<form action="" method="post" class="login">
+    <h1 class="login-title">Login</h1>
+    {{ form.hidden_tag() }}
+    <div class="login-form-group">
+        {{ form.mail.label(class_='') }}
+        {{ form.mail(class_='email-input') }}
+    </div>
+    <div class="login-form-group">
+        {{ form.psw.label(class_='') }}
+        {{ form.psw(class_='password-input') }}
+    </div>
+    <div class="login-form-group-checkbox">
+        {{ form.remember() }}{{ form.remember.label() }}
+    </div>
+    <div class="login-form-group">
+        {{ form.submit(class_='submit-button') }}
+    </div>
+    <div class="login-form-group-href">
+        <a href="{{url_for('register')}}">Create an account</a>
+    </div>
+    <div class="flash-messages">
+        {% for cat, m in get_flashed_messages(True) %}
+        <div class="messagetxt {{ cat }}">{{ m }}</div>
+        {% endfor %}
+    </div>
+</form>
+
+{% endblock %}
+{% block footer %}
+<p>Login</p>
+{% endblock %}
+
+
+

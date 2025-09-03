@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% block content %}
+
+{% if support_chat_list %}
+<div class="h1-container">
+    <div class="cell left">
+        <a href="{{url_for('contact')}}" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+    </div>
+    <div class="cell center">
+        <h1 class="h1-contact">Request №{{support_chat_list[0]['id_support']}}</h1>
+    </div>
+    <div class="cell right"></div>
+</div>
+
+<div id="chat-container" class="chat-container">
+    {% for item in support_chat_list %}
+    <div class="support-message {% if item.id_user == user_id %}user-message{% else %}admin-message{% endif %}">
+        <div class="message-content">
+            {% if item.id_user != user_id %}
+            <div class="contact-admin-avatar">
+                <img src="/static/images/admin_avatar2.png" alt="Admin Avatar" style="width: 30px; height: 30px;">
+            </div>
+            {% endif %}
+            <div class="message-text">
+                <p class="name">{% if item.id_user == user_id %}Your message{% else %}SITEPROGRESTOURANT{% endif %}</p>
+                <p class="time">{{ item.time }}</p>
+                <p class="text">{{ item.message }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    window.onload = function() {
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) {
+            const messages = chatContainer.getElementsByClassName('support-message');
+            if (messages.length > 0) {
+                messages[messages.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    };
+</script>
+
+{% if support_status == 0 %}
+<form action="{{url_for('reply_message_support', alias=alias)}}" method="post" class="message-form">
+    <input type="text" name="message" class="message-input" placeholder="Enter your message" required>
+    <input type="hidden" name="id_message" value="{{support_chat_list[0]['id_message']}}">
+    <input type="hidden" name="id_user" value="{{support_chat_list[0]['id_user']}}">
+    <input type="hidden" name="id_support" value="{{support_chat_list[0]['id_support']}}">
+    <input type="hidden" name="name" value="{{support_chat_list[0]['name']}}">
+    <input type="hidden" name="email" value="{{support_chat_list[0]['email']}}">
+
+    <input type="submit" value="Reply" class="сontact_chat_submit-button">
+</form>
+{% else %}
+<div class="h1-container">
+    <div class="cell left">
+        <a href="{{url_for('contact')}}" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+    </div>
+    <div class="cell center">
+        <h1 class="h1-contact">Request closed</h1>
+    </div>
+    <div class="cell right"></div>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+<p>Feedback chat</p>
+{% endblock %}

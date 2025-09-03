@@ -1,0 +1,105 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="cart-container">
+    <h1>Cart</h1>
+    {% if dishes %}
+    <ul>
+        {% for item in dishes %}
+        <li>
+            <img class="img-cart" src="{{ url_for('image_dish', dish_id=item.dish_id)}}" alt="dish img">
+            <div class="dish-info">
+                <p class="dish-name">{{ item.name }}</p>
+                <p class="dish-quantity">Quantity: {{ item.quantity }}</p>
+                <p class="dish-price_cart">Price: {{ '{:.2f}'.format(item.dis_price|int)}}</p>
+            </div>
+            <form action="{{url_for('remove_dish_from_cart', id_remove=item.dish_id)}}" method="post" class="delete-dish-from-cart">
+                <button type="submit" class="delete-btn-from-cart">&times;</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <p class="total-cart">Total: {{'{:.2f}'.format(sum)}}</p>
+
+    <button class="place-an-order" onclick="openModal()">Place an Order</button>
+
+    {% else %}
+    <h2 align="center">Empty</h2>
+    {% endif %}
+</div>
+
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Enter delivery address</h2>
+        <form action="{{ url_for('add_cart_in_db') }}" method="POST" id="address-form">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required placeholder="Enter city">
+
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required placeholder="Enter street (e.g., Main St.)">
+
+            <label for="house-number">House number:</label>
+            <input type="text" id="house-number" name="house_number" required placeholder="Enter house number">
+
+            <label>Housing type:</label>
+            <div class="housing-type">
+                <input type="radio" id="private-house" name="housing_type" value="house" onclick="toggleApartmentFields()" checked>
+                <label for="private-house">Private house</label>
+
+                <input type="radio" id="apartment-building" name="housing_type" value="apartment" onclick="toggleApartmentFields()">
+                <label for="apartment-building">Apartment building</label>
+            </div>
+
+            <div id="apartment-details" style="display:none;">
+                <label for="entrance-number">Entrance number:</label>
+                <input type="text" id="entrance-number" name="entrance_number" placeholder="Enter entrance number">
+
+                <label for="floor">Floor:</label>
+                <input type="text" id="floor" name="floor" placeholder="Enter floor">
+
+                <label for="apartment-number">Apartment/office number:</label>
+                <input type="text" id="apartment-number" name="apartment_number" placeholder="Enter apartment or office number">
+
+                <label for="intercom-code">Intercom code:</label>
+                <input type="text" id="intercom-code" name="intercom_code" placeholder="Enter intercom code (if required)">
+            </div>
+
+            <label for="landmarks">Landmarks:</label>
+            <input type="text" id="landmarks" name="landmarks" placeholder="Specify landmarks (if necessary)">
+
+            <button type="submit" class="submit-address-btn">Confirm Order</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleApartmentFields() {
+    const apartmentDetails = document.getElementById('apartment-details');
+    const housingType = document.querySelector('input[name="housing_type"]:checked').value;
+
+    if (housingType === 'apartment') {
+        apartmentDetails.style.display = 'block';
+    } else {
+        apartmentDetails.style.display = 'none';
+    }
+}
+
+function openModal() {
+    document.getElementById('orderModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('orderModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('orderModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+}
+</script>
+{% endblock %}
+{% block footer %}
+<p>Dish list</p>
+{% endblock%}

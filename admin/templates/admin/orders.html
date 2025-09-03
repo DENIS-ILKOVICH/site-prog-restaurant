@@ -1,0 +1,181 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<div class="order-container">
+    <h2>Order List</h2>
+
+    <div class="order-search">
+        <form action="{{ url_for('.show_orders') }}" method="post">
+            <input type="text" name="order" value="" required/>
+            <input type="submit" value="Search" required/>
+        </form>
+    </div>
+
+    <div class="container">
+        <p class="toggle-sorting">Sort Orders</p>
+    </div>
+
+    <div class="order-sorting" id="sorting-menu">
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="orderX" value="x" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order1" value="Descending" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order2" value="Ascending" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_price1" value="From Expensive" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_price2" value="From Cheap" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_status1" value="Ordered" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_status2" value="In Progress" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_status3" value="Delivery" required/>
+            </form>
+        </div>
+
+        <div class="sort-option">
+            <form action="{{ url_for('.show_orders') }}" method="post">
+                <input type="submit" name="order_status4" value="Completed" required/>
+            </form>
+        </div>
+    </div>
+
+    {% if orders %}
+    <div class="order-list">
+        {% for item in orders %}
+        <div class="order-card">
+            <div class="order-header">
+                <div class="button-container">
+                    {% if item.status == 0 %}
+                    <form id="form-status-0"
+                          action="{{ url_for('.order_confirmation', id=item.id, search_order=request.args.get('search_order'), sort_order=request.args.get('sort_order'), flag=1)}}"
+                          method="post" onsubmit="saveScrollPosition()">
+                        <input type="submit" name='success' value="Start Processing" class="button-confirm">
+                    </form>
+                    {% endif %}
+
+                    {% if item.status == 1 %}
+                    <form id="form-status-1"
+                          action="{{ url_for('.order_confirmation', id=item.id, search_order=request.args.get('search_order'), sort_order=request.args.get('sort_order'), flag=2)}}"
+                          method="post" onsubmit="saveScrollPosition()">
+                        <input type="submit" name='info' value="Send Order" class="button-info">
+                    </form>
+                    {% endif %}
+
+                    {% if item.status == 2 %}
+                    <form id="form-status-2"
+                          action="{{ url_for('.order_confirmation', id=item.id, search_order=request.args.get('search_order'), sort_order=request.args.get('sort_order'), flag=3)}}"
+                          method="post" onsubmit="saveScrollPosition()">
+                        <input type="submit" name='warning' value="Confirm Order" class="button-warning">
+                    </form>
+                    <form id="form-status-cancel"
+                          action="{{ url_for('.order_confirmation', id=item.id, search_order=request.args.get('search_order'), sort_order=request.args.get('sort_order'), flag=0)}}"
+                          method="post" onsubmit="saveScrollPosition()">
+                        <input type="hidden" name="search" value="{{ request.args.get('search_order') }}">
+                        <input type="submit" value="Cancel" class="button-delete">
+                    </form>
+                    {% endif %}
+                </div>
+
+                <p class="order-number">Order №{{ item.id }}</p>
+                {% if item.status == 0 %}<p> Ordered {% endif %}
+                {% if item.status == 1 %}<p> In Progress {% endif %}
+                {% if item.status == 2 %}<p> Delivery {% endif %}
+                {% if item.status == 3 %}<p> Completed {% endif %}
+            </div>
+
+            <div class="order-details">
+                <p><strong>Name:</strong> {{item.name}}</p>
+                <p><strong>Email:</strong> {{item.email}}</p>
+                <p><strong>Time:</strong> {{item.time}}</p>
+                <div class="order-cart">
+                    <p><strong>Order:</strong></p>
+                    <div>{{ item.cart | safe }}</div>
+                </div>
+            </div>
+
+            <div class="delivery-details">
+                <p><strong>Delivery Address:</strong></p>
+                {% if item.delivery %}
+                <p>{{ item.delivery | safe }}</p>
+                {% else %}
+                <p class="no-data">No data</p>
+                {% endif %}
+            </div>
+
+            <form action="{{ url_for('.delete_order', id=item.id, search_order=request.args.get('search_order'), sort_order=request.args.get('sort_order')) }}"
+                  method="post">
+                <input type="hidden" name="search" value="{{ request.args.get('search_order') }}">
+                <input type="submit" value="Delete" class="button-delete">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    body.hidden { visibility: hidden; }
+    body.shown { opacity: 1; transition: opacity 0.3s ease; }
+    body.hidden.shown { opacity: 0; }
+</style>
+
+<script>
+document.querySelector('.toggle-sorting').addEventListener('click', function() {
+    var sortingMenu = document.getElementById('sorting-menu');
+    if (sortingMenu.classList.contains('show')) {
+        sortingMenu.classList.remove('show');
+        setTimeout(() => { sortingMenu.style.display = "none"; }, 300);
+    } else {
+        sortingMenu.style.display = "flex";
+        setTimeout(() => { sortingMenu.classList.add('show'); }, 10);
+    }
+});
+
+function saveScrollPosition() {
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+    document.body.classList.add('hidden');
+}
+
+window.addEventListener('load', function () {
+    const scrollPosition = sessionStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+        window.scrollTo(0, scrollPosition);
+        sessionStorage.removeItem('scrollPosition');
+    }
+    document.body.classList.remove('hidden');
+    document.body.classList.add('shown');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% block content %}
+<form action="/register" method="post" class="register">
+    <h1>Register</h1>
+    <br>
+    <div class="form-group-register">
+        <p><label>Name: </label><input type="text" name="name" value="" required /></p>
+        <p><label>Email: </label><input type="email" name="mail" value="" required /></p>
+        <p><label>Password: </label><input type="password" name="psw" value="" required /></p>
+        <p><label>Confirm password: </label><input type="password" name="psw2" value="" required /></p>
+    </div>
+    <div class="form-actions-register">
+        <input type="submit" value="Sign up"/>
+        <div class="login-form-group-href"><a href="{{ url_for('login') }}" class="dropdown-item">Sign in</a></div>
+        <div class="flash-messages">
+            {% for cat, m in get_flashed_messages(with_categories=True) %}
+            <div class="messagetxt {{ cat }}">{{ m }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block footer %}
+<p>Register</p>
+{% endblock %}
+
+
+
+

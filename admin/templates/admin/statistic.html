@@ -1,0 +1,31 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="header-container">
+        <img width="150" height="150" src="/admin/static/images/statistic.png" alt="Statistics">
+        <h1>SITEPROGRESTAURANT Statistics</h1>
+    </div>
+</div>
+
+<div class="href-container">
+    <div class="block-href block-href-visits">
+        <a href="{{ url_for('.visits_statistic') }}">
+            <img src="/admin/static/images/icon1.png" alt="Visits Statistics">
+            <div class="text-content">
+                <h2>Visits Statistics</h2>
+                <p class="description">View website traffic analytics.</p>
+            </div>
+        </a>
+    </div>
+    <div class="block-href block-href-finance">
+        <a href="{{ url_for('.finance') }}">
+            <img src="/admin/static/images/icon2.png" alt="Finance">
+            <div class="text-content">
+                <h2>Financial Reports</h2>
+                <p class="description">View financial statistics and reports.</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

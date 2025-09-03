@@ -1,55 +1,51 @@
-/* Стили для тела документа */
 html, body {
-    height: 100%; /* Устанавливаем высоту для html и body */
-    margin: 0; /* Убираем стандартные отступы */
-    background-color: #121212; /* Темный фон для страницы */
-    color: #e0e0e0; /* Светлый цвет текста для лучшего контраста на темном фоне */
-
+    height: 100%;
+    margin: 0;
+    background-color: #121212;
+    color: #e0e0e0;
 }
+
 body {
     flex-direction: column;
+}
 
-/* Стили для горизонтальной линии */
 hr {
-    border: 0; /* Убираем стандартные границы */
-    height: 2px; /* Толщина линии */
-    background: linear-gradient(to right, #333, #f4f4f4, #333); /* Градиентная линия */
-    margin: 20px 0; /* Отступы сверху и снизу */
-    position: relative; /* Для использования псевдоэлементов */
+    border: 0;
+    height: 2px;
+    background: linear-gradient(to right, #333, #f4f4f4, #333);
+    margin: 20px 0;
+    position: relative;
 }
 
-/* Псевдоэлемент для эффекта тени */
 hr::after {
-    content: ""; /* Псевдоэлемент не имеет содержимого */
-    position: absolute; /* Абсолютное позиционирование */
-    top: 50%; /* Центрируем по высоте родительского элемента */
-    left: 0; /* Начало линии с левого края */
-    width: 100%; /* Ширина тени равна ширине линии */
-    height: 4px; /* Высота тени */
-    background: rgba(0, 0, 0, 0.2); /* Цвет тени с прозрачностью */
-    transform: translateY(-50%); /* Центрируем по вертикали */
-    z-index: -1; /* Помещаем за основную линию */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateY(-50%);
+    z-index: -1;
 }
 
-/* Стили для шапки */
 header {
-    width: 60%; /* Устанавливаем ширину хедера */
-    margin: 0 auto; /* Центрируем хедер по горизонтали */
-    background-color: #333; /* Темный фон для шапки */
-    color: #e0e0e0; /* Светлый цвет текста */
+    width: 60%;
+    margin: 0 auto;
+    background-color: #333;
+    color: #e0e0e0;
     padding: 1rem 0;
-    flex-shrink: 0; /* Не позволяет шапке сжиматься */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
-    font-size: 1rem; /* Размер шрифта */
-    text-align: center; /* Центрируем текст внутри хедера */
+    flex-shrink: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    text-align: center;
 }
 
-/* Стили для навигации в шапке */
 .header {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Устанавливаем ширину для внутреннего контейнера */
+    width: 100%;
 }
 
 .header ul {
@@ -64,13 +60,13 @@ header {
 }
 
 .header a {
-    color: #e0e0e0; /* Цвет текста ссылок */
+    color: #e0e0e0;
     text-decoration: none;
     font-size: 1rem;
     padding: 0.5rem 1rem;
-    display: block; /* Ссылка занимает весь блок */
+    display: block;
     transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт для ссылок */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .header a:hover {
@@ -79,26 +75,22 @@ header {
     transform: scale(1.1);
 }
 
-/* Стили для блока контента */
 .content {
-    flex: 1; /* Основной контент занимает всё доступное пространство */
+    flex: 1;
     padding: 2rem;
-    background-color: #1e1e1e; /* Темный фон для контента */
+    background-color: #1e1e1e;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для контента */
-    margin: 0 20%; /* Отступы по 20% с каждой стороны */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 0 20%;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
-    overflow: hidden; /* Прячем переполнение */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
-/* Стили для основного блока контента */
 main {
-    height: 100%; /* Основной контент занимает всю высоту контейнера */
+    height: 100%;
 }
 
-/*--------------------------------------------------------------------*/
-/* Стили для списка пользователей */
 .user-list {
     padding: 1rem;
     background-color: #1e1e1e;
@@ -111,7 +103,7 @@ main {
 }
 
 .user-list h2 {
-    color: #e0e0e0; /* Теплый желтый цвет для заголовка */
+    color: #e0e0e0;
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
@@ -124,7 +116,7 @@ main {
 }
 
 .user-list li {
-    position: relative; /* Для правильного позиционирования почты */
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -181,7 +173,7 @@ main {
     outline: none;
 }
 
-.users-search input[type="submit"] {
+.users-search input[type="submit"], .users-search a {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -194,43 +186,28 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.users-search a {
-    padding: 11px 18px;
-    border: none;
-    border-radius: 5px;
-    background-color: #444;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
-
-.users-search input[type="submit"]:hover,
-.users-search a:hover {
+.users-search input[type="submit"]:hover, .users-search a:hover {
     background-color: #666;
 }
 
-.users-search input[type="submit"]:active,
-.users-search a:active {
+.users-search input[type="submit"]:active, .users-search a:active {
     background-color: #888;
 }
+
 .usermail {
     font-size: 1rem;
     color: #999;
-    opacity: 0; /* Скрытие почты по умолчанию */
-    transition: opacity 0.3s ease; /* Плавное появление почты */
+    opacity: 0;
+    transition: opacity 0.3s ease;
     position: absolute;
-    top: 25%; /* Центрирование по вертикали */
-    right: 1rem; /* Расположение почты справа */
+    top: 25%;
+    right: 1rem;
     transform: translateY(-50%);
 }
 
 .user-list li:hover .usermail {
-    opacity: 1; /* Показываем почту при наведении */
+    opacity: 1;
 }
-
 
 hr {
     border: none;
@@ -238,113 +215,98 @@ hr {
     margin-bottom: 1rem;
 }
 
-/*--------------------------------------------------------------------*/
-/* Стили для заголовка */
 h2 {
-    font-size: 1.5rem; /* Размер шрифта для заголовка */
-    margin-bottom: 1rem; /* Отступ снизу у заголовка */
-    color: #e0e0e0; /* Светлый цвет текста */
-    font-weight: bold; /* Жирное начертание шрифта */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #e0e0e0;
+    font-weight: bold;
 }
 
-/* Стили для контейнера авторизации */
 .login-container {
     display: flex;
-    flex-direction: column; /* Вертикальное размещение элементов */
-    justify-content: center; /* Центрирование формы по вертикали */
-    align-items: center; /* Центрирование формы по горизонтали */
-    height: 100vh; /* Высота контейнера на весь экран */
-    background-color: #1e1e1e; /* Тёмный фон для страницы */
-    padding: 2rem; /* Отступы внутри контейнера */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e1e;
+    padding: 2rem;
 }
 
-/* Стили для заголовка внутри контейнера */
 .login-container h2 {
-    color: #fff; /* Цвет текста заголовка */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
-    font-size: 2rem; /* Размер шрифта заголовка */
-    text-align: center; /* Выравнивание текста по центру */
-    margin-bottom: 1.5rem; /* Отступ снизу у заголовка */
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
 }
 
-/* Стили для формы авторизации */
 .login-form {
-    background-color: #2c2c2c; /* Тёмный фон для формы */
-    border-radius: 8px; /* Скругление углов формы */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для формы */
-    padding: 2rem; /* Отступы внутри формы */
-    max-width: 400px; /* Максимальная ширина формы */
-    width: 100%; /* Ширина формы на всю доступную ширину */
-    box-sizing: border-box; /* Учитываем отступы и границы в общей ширине */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные анимации */
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Анимация формы при наведении */
 .login-form:hover {
-    transform: scale(1.02); /* Лёгкое увеличение формы при наведении */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Увеличиваем тень при наведении */
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Стили для полей ввода */
-.login-form input[type="text"],
-.login-form input[type="password"] {
-    width: 100%; /* Ширина полей ввода с учётом внутренних отступов */
-    padding: 1rem; /* Отступы внутри полей ввода */
-    border: 1px solid #444; /* Граница полей ввода */
-    border-radius: 4px; /* Скругление углов полей ввода */
-    margin-bottom: 1rem; /* Отступ снизу между полями ввода */
-    font-size: 1.1rem; /* Размер шрифта */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
-    color: #fff; /* Цвет текста */
-    background-color: #333; /* Цвет фона полей ввода */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавные анимации */
-    box-sizing: border-box; /* Учитываем отступы и границы в общей ширине */
+.login-form input[type="text"], .login-form input[type="password"] {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #444;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    background-color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
-/* Стили для полей ввода при фокусе */
-.login-form input[type="text"]:focus,
-.login-form input[type="password"]:focus {
-    border-color: #007bff; /* Цвет границы при фокусе */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7); /* Тень при фокусе */
-    outline: none; /* Убираем стандартный контур при фокусе */
+.login-form input[type="text"]:focus, .login-form input[type="password"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+    outline: none;
 }
 
-/* Стили для меток */
 .login-form label {
-    display: block; /* Метки занимают всю ширину блока */
-    margin-bottom: 0.5rem; /* Отступ снизу у меток */
-    font-size: 1rem; /* Размер шрифта меток */
-    color: #ddd; /* Цвет текста меток */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #ddd;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Стили для кнопки отправки */
 .submit_admin {
-    width: 100%; /* Ширина кнопки на всю доступную ширину */
-    padding: 1rem; /* Отступы внутри кнопки */
-    border: none; /* Убираем границу кнопки */
-    border-radius: 4px; /* Скругление углов кнопки */
-    background-color: #007bff; /* Цвет фона кнопки */
-    color: #fff; /* Цвет текста на кнопке */
-    font-size: 1.1rem; /* Размер шрифта */
-    cursor: pointer; /* Курсор руки при наведении */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Плавные анимации */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Анимация кнопки при наведении */
 .submit_admin:hover {
-    background-color: #0056b3; /* Более тёмный цвет фона при наведении */
-    transform: scale(1.05); /* Лёгкое увеличение кнопки при наведении */
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
-/* Анимация кнопки при нажатии */
 .submit_admin:active {
-    background-color: #004494; /* Ещё более тёмный цвет фона при нажатии */
-    transform: scale(0.98); /* Лёгкое уменьшение кнопки при нажатии */
+    background-color: #004494;
+    transform: scale(0.98);
 }
-/*----------------------------------------------------------*/
-/* Основные стили для формы добавления блюда */
+
 .add-dish {
     background: #fff;
     border-radius: 8px;
@@ -352,11 +314,17 @@ h2 {
     padding: 20px;
     max-width: 600px;
     margin: 20px auto;
+    display: none;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s;
 }
 
+
 .toggle-button {
-    background: #ffcc00; /* Жёлтый цвет акцентов сайта */
-    color: #121212; /* Темный цвет текста для контраста */
+    background: #ffcc00;
+    color: #121212;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -364,37 +332,25 @@ h2 {
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
     display: block;
-    margin: 20px auto; /* Центрирование кнопки по горизонтали */
+    margin: 20px auto;
 }
 
 .toggle-button:hover {
-    background: #ffb700; /* Светлее жёлтый при наведении */
-    color: #fff; /* Белый цвет текста при наведении */
+    background: #ffb700;
+    color: #fff;
 }
 
-.add-dish {
-    display: none; /* Скрываем блок по умолчанию */
-    background-color: #f9f9f9; /* Цвет фона формы */
-    padding: 20px; /* Отступы */
-    border-radius: 5px; /* Закругление углов формы */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень формы */
-    animation: fadeIn 0.5s; /* Плавное появление */
-}
 
-/* Анимация появления */
 @keyframes fadeIn {
     from {
-        opacity: 0; /* Начальная прозрачность */
-        transform: translateY(-10px); /* Сдвиг вверх */
+        opacity: 0;
+        transform: translateY(-10px);
     }
     to {
-        opacity: 1; /* Конечная прозрачность */
-        transform: translateY(0); /* Вернуться на место */
+        opacity: 1;
+        transform: translateY(0);
     }
 }
-
-
-
 
 .add-dish p {
     margin-bottom: 15px;
@@ -407,9 +363,7 @@ h2 {
     margin-bottom: 5px;
 }
 
-.add-dish input[type="text"],
-.add-dish textarea,
-.add-dish input[type="file"] {
+.add-dish input[type="text"], .add-dish textarea, .add-dish input[type="file"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -419,9 +373,7 @@ h2 {
     transition: border-color 0.3s ease;
 }
 
-.add-dish input[type="text"]:focus,
-.add-dish textarea:focus,
-.add-dish input[type="file"]:focus {
+.add-dish input[type="text"]:focus, .add-dish textarea:focus, .add-dish input[type="file"]:focus {
     border-color: #ffcc00;
     outline: none;
 }
@@ -444,171 +396,34 @@ h2 {
 
 .add-dish select {
     width: 100%;
-    padding: 15px; /* Збільшено відступ, щоб селектор виглядав більшим */
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
-    transition: border-color 0.3s ease, background-color 0.3s ease; /* Додано перехід для фону */
-    appearance: none; /* Сховати стандартний стиль */
-    background-color: #555555; /* Колір фону селектора */
-    color: #ffffff; /* Білий текст для селектора */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    appearance: none;
+    background-color: #555555;
+    color: #ffffff;
 }
 
 .add-dish select:focus {
     border-color: #ffcc00;
     outline: none;
-    background-color: #444444; /* Зміна фону при фокусі */
+    background-color: #444444;
 }
 
 .add-dish select option {
-    background-color: #555555; /* Колір фону для всіх варіантів */
+    background-color: #555555;
     font-size:15px;
-    color: #ffffff; /* Білий текст для всіх варіантів */
-    padding: 15px; /* Збільшені відступи для варіантів (на 50% більше) */
-}
-
-/* Темніший колір при наведенні на опції (не завжди підтримується) */
-.add-dish select option:hover {
-    background-color: #444444; /* Темніший фон при наведенні */
-}
-
-/* Стили для сообщений */
-.message {
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.message.info {
-    background: #e7f1ff;
-    color: #007bff;
-}
-
-.message.success {
-    background: #d4edda;
-    color: #155724;
-}
-
-.message.error {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* Стили для списка блюд */
-.dish-list {
-    margin: 20px auto;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-.dish-item {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
     padding: 15px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
 }
 
-.dish-item img {
-    width: 125px;
-    height: 125px;
-    object-fit: cover;
-    border-radius: 8px;
+.add-dish select option:hover {
+    background-color: #444444;
 }
 
-.dish-item h2 {
-    font-size: 20px;
-    margin: 0;
-    color: #333;
-}
-
-.dish-item p {
-    margin: 5px 0;
-    color: #666;
-}
-
-.dish-item .price {
-    font-size: 18px;
-    color: #ffcc00;
-    font-weight: bold;
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    color: #ff0000;
-    transition: color 0.3s ease;
-}
-
-.delete-btn:hover {
-    color: #cc0000;
-}
-
-/* Основные стили для формы добавления блюда */
-.add-dish {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-.add-dish p {
-    margin-bottom: 15px;
-}
-
-.add-dish label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.add-dish input[type="text"],
-.add-dish textarea,
-.add-dish input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-}
-
-.add-dish input[type="text"]:focus,
-.add-dish textarea:focus,
-.add-dish input[type="file"]:focus {
-    border-color: #ffcc00;
-    outline: none;
-}
-
-.add-dish input[type="submit"] {
-    background: #ffcc00;
-    color: #333;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-.add-dish input[type="submit"]:hover {
-    background: #ffb700;
-    color: #fff;
-}
-
-/* Стили для сообщений */
 .message {
     border-radius: 4px;
     padding: 10px;
@@ -632,7 +447,6 @@ h2 {
     color: #721c24;
 }
 
-/* Стили для списка блюд */
 .dish-list {
     margin: 20px auto;
     max-width: 800px;
@@ -672,6 +486,7 @@ h2 {
 .dish-item .price {
     font-size: 18px;
     color: #ffcc00;
+    font-weight: bold;
 }
 
 .delete-btn {
@@ -686,13 +501,12 @@ h2 {
 .delete-btn:hover {
     color: #cc0000;
 }
-/*---------------------------------------------------------------------------------*/
-/* Стиль для контейнера блюд с анимацией */
+
 .dish-container {
     padding: 0;
     overflow-y:auto;
 }
-/* Стили для формы поиска блюда */
+
 .dish-search {
     display: flex;
     justify-content: center;
@@ -700,36 +514,36 @@ h2 {
     gap: 10px;
     margin: 20px auto;
     max-width: 400px;
-    background-color: #333; /* Тёмный фон формы */
+    background-color: #333;
     border-radius: 8px;
     padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Более выраженная тень */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dish-search input[type="text"] {
     flex-grow: 1;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #444; /* Темная граница */
+    border: 1px solid #444;
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: #222; /* Тёмный фон поля ввода */
-    color: #ddd; /* Светлый текст */
+    background-color: #222;
+    color: #ddd;
     transition: border-color 0.3s ease;
 }
 
 .dish-search input[type="text"]::placeholder {
-    color: #777; /* Цвет текста-подсказки */
+    color: #777;
 }
 
 .dish-search input[type="text"]:focus {
-    border-color: #ffcc00; /* Жёлтая граница при фокусе */
+    border-color: #ffcc00;
     outline: none;
 }
 
 .dish-search input[type="submit"] {
-    background-color: #444; /* Тёмная кнопка */
-    color: #ddd; /* Светлый текст */
+    background-color: #444;
+    color: #ddd;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -739,20 +553,18 @@ h2 {
 }
 
 .dish-search input[type="submit"]:hover {
-    background-color: #ffcc00; /* Жёлтая кнопка при наведении */
-    color: #222; /* Тёмный текст при наведении */
+    background-color: #ffcc00;
+    color: #222;
 }
 
-/* Стиль для расширенного состояния контейнера */
 .dish-container.expanded {
-    max-height: 1000px; /* Убедитесь, что значение достаточно большое для полного отображения содержимого */
+    max-height: 1000px;
     padding: 20px;
 }
-/*/////////////////////////////////////////////////*/
-/* Стиль для кнопки переключения */
+
 .toggle-btn {
-    background: #ffcc00; /* Жёлтый цвет акцентов сайта */
-    color: #121212; /* Темный цвет текста для контраста */
+    background: #ffcc00;
+    color: #121212;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -760,25 +572,24 @@ h2 {
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
     display: block;
-    margin: 20px auto; /* Центрирование кнопки по горизонтали */
+    margin: 20px auto;
 }
 
 .toggle-btn:hover {
-    background: #ffb700; /* Светлее жёлтый при наведении */
-    color: #fff; /* Белый цвет текста при наведении */
+    background: #ffb700;
+    color: #fff;
 }
-/*/////////////////////////////////////////////////*/
-/* Стиль для элемента блюда */
+
 .dish-item {
     position: relative;
-    border: 1px solid #444; /* Более темная граница для лучшего контраста */
+    border: 1px solid #444;
     border-radius: 8px;
     margin-bottom: 20px;
     padding: 20px;
     overflow: hidden;
-    background: #1e1e1e; /* Темный фон элемента блюда */
-    color: #e0e0e0; /* Светлый текст для контраста */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Более глубокая тень для контраста */
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dish-item-header {
@@ -795,64 +606,54 @@ h2 {
     padding-top: 10px;
 }
 
-/* Стиль для кнопки удаления */
 .delete-btn {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: none; /* Убирает фон */
-    color: #ff4d4d; /* Красный цвет крестика */
-    border: none; /* Убирает рамку */
-    font-size: 34px; /* Увеличивает размер крестика */
-    line-height: 1; /* Убирает лишние отступы вокруг текста */
-    cursor: pointer; /* Курсор руки для кликабельности */
-    transition: color 0.3s ease; /* Плавное изменение цвета */
+    background: none;
+    color: #ff4d4d;
+    border: none;
+    font-size: 34px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .delete-btn:hover {
-    color: #e60000; /* Темно-красный цвет при наведении */
+    color: #e60000;
 }
 
-/* Стили для списка блюд */
 .dish-list {
     margin: 20px auto;
     max-width: 800px;
     padding: 0 20px;
 }
-/*-------------------------------------------------------------------------------*/
 
+.dish-item-body p {
+    cursor: pointer;
+    color: #ffcc00;
+    transition: color 0.3s ease;
+}
 
-    /* Интерактивный текст, который можно редактировать */
-    .dish-item-body p {
-        cursor: pointer;
-        color: #ffcc00;
-        transition: color 0.3s ease;
-    }
+.dish-item-body p:hover {
+    color: #ffb700;
+}
 
-    /* Изменение цвета текста при наведении */
-    .dish-item-body p:hover {
-        color: #ffb700;
-    }
+.dish-item-body.editing input,
+.dish-item-body.editing textarea {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    background-color: #333;
+    border: 1px solid #ffcc00;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+}
 
-    /* Отображение полей ввода при редактировании */
-    .dish-item-body.editing input,
-    .dish-item-body.editing textarea {
-        display: block;
-        width: 100%;
-        margin-top: 5px;
-        background-color: #333;
-        border: 1px solid #ffcc00;
-        color: #fff;
-        padding: 5px;
-        border-radius: 4px;
-    }
-
-    /* Скрытие текста при активном поле ввода */
-    .dish-item-body.editing p {
-        display: none;
-    }
-    /* Общие стили для кнопок изменения статуса */
-
+.dish-item-body.editing p {
+    display: none;
+}
 
 .change_dish input[type="submit"] {
     background-color: #ffcc00;
@@ -865,15 +666,13 @@ h2 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Изменение фона и цвета текста при наведении на кнопки */
 .change_dish input[type="submit"]:hover {
     background-color: #ffb700;
     color: #fff;
 }
 
-/* Стили для кнопок "Выставить" и "Скрыть" */
 .change_dish input[name="status_on"] {
-    background-color: #28a745; /* Зеленый цвет для кнопки "Выставить" */
+    background-color: #28a745;
 }
 
 .change_dish input[name="status_on"]:hover {
@@ -881,104 +680,100 @@ h2 {
 }
 
 .change_dish input[name="status_off"] {
-    background-color: #dc3545; /* Красный цвет для кнопки "Скрыть" */
+    background-color: #dc3545;
 }
 
 .change_dish input[name="status_off"]:hover {
     background-color: #c82333;
 }
 
-/*-------------------------------------------------------------------------------*/
 .add-dish {
-    background-color: #333; /* Темний фон для форми */
-    border-radius: 8px; /* Закруглені кути */
-    padding: 20px; /* Внутрішні відступи */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тінь для форми */
-    max-width: 600px; /* Максимальна ширина форми */
-    margin: 0 auto; /* Вирівнювання по центру */
+    background-color: #333;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .add-dish p {
-    margin-bottom: 15px; /* Відступи між рядками */
+    margin-bottom: 15px;
 }
 
 .add-dish label {
-    display: block; /* Розташування міток на окремих рядках */
-    color: #fff; /* Білий текст */
-    margin-bottom: 5px; /* Відступ під мітками */
-    font-weight: bold; /* Товстий шрифт для міток */
+    display: block;
+    color: #fff;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .add-dish input[type="text"],
 .add-dish textarea,
 .add-dish input[type="file"] {
-    width: 100%; /* Ширина інпутів на всю ширину контейнера */
-    padding: 10px; /* Внутрішні відступи */
-    border: 1px solid #444; /* Сірий бордер */
-    border-radius: 4px; /* Закруглені кути */
-    background-color: #555; /* Темний фон інпутів */
-    color: #fff; /* Білий текст */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #555;
+    color: #fff;
 }
 
 .add-dish input[type="submit"] {
-    background-color: #f39c12; /* Яскравий жовтий фон */
-    color: #333; /* Білий текст */
-    border: none; /* Без бордера */
-    padding: 15px 20px; /* Внутрішні відступи */
-    border-radius: 4px; /* Закруглені кути */
-    cursor: pointer; /* Курсор у вигляді руки */
-    font-size: 16px; /* Розмір шрифту */
+    background-color: #f39c12;
+    color: #333;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .add-dish input[type="submit"]:hover {
-    background-color: #e67e22; /* Темніший жовтий при наведенні */
+    background-color: #e67e22;
 }
 
 .message {
-    margin-top: 10px; /* Відступ зверху */
-    padding: 10px; /* Внутрішні відступи */
-    border-radius: 4px; /* Закруглені кути */
-    font-size: 14px; /* Розмір шрифту */
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .message.success {
-    background-color: #2ecc71; /* Зелений фон для успішних повідомлень */
-    color: #fff; /* Білий текст */
+    background-color: #2ecc71;
+    color: #fff;
 }
 
 .message.error {
-    background-color: #e74c3c; /* Червоний фон для помилок */
-    color: #fff; /* Білий текст */
-}
-/*--------------------------------------------------------------*/
-/* Стиль для форми */
-.logout-fr {
-    text-align: center; /* Центрування форми */
-    margin: 20px 0; /* Відступи зверху та знизу */
+    background-color: #e74c3c;
+    color: #fff;
 }
 
-/* Стиль для кнопки */
+.logout-fr {
+    text-align: center;
+    margin: 20px 0;
+}
+
 .logout-bt {
-    background-color: #3498db; /* Яскравий синій фон */
-    color: #fff; /* Білий текст */
-    border: none; /* Без бордера */
-    padding: 10px 20px; /* Внутрішні відступи */
-    border-radius: 5px; /* Закруглені кути */
-    font-size: 16px; /* Розмір шрифту */
-    cursor: pointer; /* Курсор у вигляді руки */
-    transition: background-color 0.3s; /* Анімація зміни фону */
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .logout-bt:hover {
-    background-color: #2980b9; /* Темніший синій при наведенні */
+    background-color: #2980b9;
 }
 
 .logout-bt:focus {
-    outline: none; /* Без обводки при фокусі */
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); /* Легка тінь для фокусу */
+    outline: none;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
-/*-----------------------------------------------------------------------*/
 
 .order-container {
     background-color: #2c2c2c;
@@ -998,13 +793,13 @@ h2 {
 }
 
 body {
-    background-color: #2c2c2c; /* Темный фон */
-    color: #f5f5f5; /* Светлый текст */
+    background-color: #2c2c2c;
+    color: #f5f5f5;
     font-family: Arial, sans-serif;
 }
 
 h2 {
-    color: #f1c40f; /* Теплый желтый цвет для заголовка */
+    color: #f1c40f;
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
@@ -1018,9 +813,9 @@ h2 {
 .order-search input[type="text"] {
     width: 60%;
     padding: 10px;
-    border: 2px solid #f1c40f; /* Желтая рамка */
-    background-color: #3b3b3b; /* Темный фон поля */
-    color: #f5f5f5; /* Светлый текст в поле */
+    border: 2px solid #f1c40f;
+    background-color: #3b3b3b;
+    color: #f5f5f5;
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
@@ -1028,9 +823,9 @@ h2 {
 
 .order-search input[type="submit"] {
     padding: 10px 20px;
-    background-color: #f1c40f; /* Желтый фон кнопки */
+    background-color: #f1c40f;
     border: none;
-    color: #2c2c2c; /* Темный текст на кнопке */
+    color: #2c2c2c;
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
@@ -1039,29 +834,26 @@ h2 {
 }
 
 .order-search input[type="submit"]:hover {
-    background-color: #d4ac0d; /* Темнее при наведении */
+    background-color: #d4ac0d;
 }
 
-
-
-/* Новые минималистичные стили для сортировки */
 .order-sorting {
-    display: none; /* Меню скрыто по умолчанию */
+    display: none;
     flex-direction: column;
-    align-items: center; /* Центрирование содержимого по горизонтали */
+    align-items: center;
     transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
     opacity: 0;
-    max-height: 0; /* Скрытие блока */
-    padding: 0; /* Убираем внутренние отступы */
-    overflow: hidden; /* Скрытие содержимого при закрытии */
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .order-sorting.show {
-    display: flex; /* Меню отображается */
+    display: flex;
     opacity: 1;
-    max-height: 500px; /* Достаточно большая высота для раскрытого состояния */
+    max-height: 500px;
     margin-top: 10px;
-    margin-bottom: 30px; /* Внутренние отступы при раскрытии */
+    margin-bottom: 30px;
 }
 
 .sort-option {
@@ -1087,7 +879,7 @@ h2 {
 
 .sort-option input[type="submit"]:focus {
     outline: none;
-    box-shadow: 0 0 5px 2px rgba(241, 196, 15, 0.5); /* Желтая тень при фокусе */
+    box-shadow: 0 0 5px 2px rgba(241, 196, 15, 0.5);
 }
 
 .toggle-sorting {
@@ -1102,15 +894,13 @@ h2 {
     text-align: center;
     display: inline-block;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    text-transform: uppercase; /* Преобразование текста в верхний регистр для кнопки */
+    text-transform: uppercase;
 }
 
-/* Стили для контейнера кнопки */
 .container {
     display: flex;
-    justify-content: center; /* Центрирование содержимого по горизонтали */
+    justify-content: center;
 }
-
 
 .toggle-sorting:hover {
     background-color: #444;
@@ -1118,11 +908,9 @@ h2 {
     border-color: #f1c40f;
 }
 
-
-
 .order-list {
     display: flex;
-    margin-top:25px;
+    margin-top: 25px;
     flex-direction: column;
     gap: 20px;
 }
@@ -1145,23 +933,23 @@ h2 {
     border-bottom: 2px solid #ffcc00;
     padding-bottom: 10px;
     margin-bottom: 15px;
-    position: relative; /* Ensure this is relative for positioning buttons */
+    position: relative;
 }
 
 .button-container {
     position: absolute;
-    align-items:center;
-    right: 10px; /* Distance from the right edge of the container */
+    align-items: center;
+    right: 10px;
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 10px; /* Space between buttons */
+    flex-direction: column;
+    gap: 10px;
 }
 
 .button-confirm,
 .button-delete,
 .button-info,
 .button-warning {
-    background-color: #4caf50; /* Default green for confirmation */
+    background-color: #4caf50;
     border: none;
     padding: 6px 10px;
     border-radius: 5px;
@@ -1170,7 +958,6 @@ h2 {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Подтверждение (зелёная кнопка) */
 .button-confirm {
     background-color: #4caf50;
 }
@@ -1181,7 +968,6 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* Удаление (красная кнопка) */
 .button-delete {
     background-color: #DC3545;
 }
@@ -1192,9 +978,8 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* Информация (светло-синяя кнопка) */
 .button-info {
-    background-color: #17a2b8; /* Light blue */
+    background-color: #17a2b8;
 }
 
 .button-info:hover {
@@ -1203,9 +988,8 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* Предупреждение (оранжевая кнопка) */
 .button-warning {
-    background-color: #fd7e14; /* Orange */
+    background-color: #fd7e14;
 }
 
 .button-warning:hover {
@@ -1213,7 +997,6 @@ h2 {
     color: #fff;
     transform: translateY(-3px);
 }
-
 
 .order-number {
     font-size: 18px;
@@ -1251,34 +1034,30 @@ h2 {
 }
 
 .delivery-details {
-    margin-bottom: 15px; /* Відступ внизу */
-    padding: 10px; /* Внутрішній відступ */
-    background-color: #2a2a2a; /* Темний фон */
-    border-radius: 5px; /* Закруглені кути */
-    color: #fff; /* Білий колір тексту */
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    color: #fff;
 }
 
 .delivery-details p {
-    margin: 5px 0; /* Відступи для абзаців */
-    font-size: 16px; /* Розмір шрифту */
+    margin: 5px 0;
+    font-size: 16px;
 }
 
 .delivery-details p:first-of-type {
-    margin-bottom: 0; /* Скасувати відступ у першому абзаці */
+    margin-bottom: 0;
 }
 
 .delivery-details .no-data {
-    color: #ff4c4c; /* Червоний колір для повідомлення про відсутність даних */
-    font-style: italic; /* Курсив для стилю */
+    color: #ff4c4c;
+    font-style: italic;
 }
 
-
-
-/*-----------------------------------------------------------------*/
-/* Общий стиль для контейнера */
 .message-container {
     background-color: #2c2c2c;
-    width:80%;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
@@ -1286,8 +1065,6 @@ h2 {
     font-family: Arial, sans-serif;
 }
 
-/* Стиль для карточки сообщения */
-/* Стиль для карточки сообщения */
 .message-card {
     background-color: #333;
     border-radius: 8px;
@@ -1295,27 +1072,23 @@ h2 {
     margin-bottom: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
-    position: relative; /* Позиционирование для размещения кнопки внутри блока */
+    position: relative;
     display: flex;
     flex-direction: column;
 }
 
-
-/* Эффект наведения на карточку сообщения */
 .message-card:hover {
     transform: translateY(-5px);
 }
 
-/* Статусы сообщений */
 .message-status-true {
-    color: #4caf50; /* Зеленый цвет для "Рассмотрено" */
+    color: #4caf50;
 }
 
 .message-status-false {
-    color: #ffcc00; /* Желтый цвет для "На рассмотрении" */
+    color: #ffcc00;
 }
 
-/* Заголовок сообщения */
 .message-header {
     display: flex;
     justify-content: space-between;
@@ -1323,13 +1096,11 @@ h2 {
     margin-bottom: 10px;
 }
 
-/* Номер сообщения */
 .message-number {
     font-size: 1.2rem;
     color: #fff;
 }
 
-/* Группа полей (имя, почта, время) */
 .message-group {
     display: flex;
     justify-content: space-between;
@@ -1338,12 +1109,13 @@ h2 {
     background-color: #444;
     border-radius: 5px;
 }
+
 .btn-dark {
     display: inline-block;
-    margin-top:10px;
+    margin-top: 10px;
     padding: 10px 20px;
-    background-color: #333; /* Тёмный фон кнопки */
-    color: #f1f1f1; /* Светлый цвет текста */
+    background-color: #333;
+    color: #f1f1f1;
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
@@ -1351,17 +1123,15 @@ h2 {
 }
 
 .btn-dark:hover {
-    background-color: #555; /* Фон кнопки при наведении */
-    color: #fff; /* Цвет текста при наведении */
-    transform: scale(1.05); /* Лёгкое увеличение при наведении */
+    background-color: #555;
+    color: #fff;
+    transform: scale(1.05);
 }
 
 .btn-dark:active {
-    transform: scale(0.98); /* Эффект нажатия */
+    transform: scale(0.98);
 }
 
-
-/* Текст сообщения */
 .message-text {
     background-color: #555;
     padding: 10px;
@@ -1369,32 +1139,31 @@ h2 {
     margin-top: 10px;
     flex: 1;
 }
-/* Кнопка удаления (крестик) */
+
 .delete-button {
     background-color: #ff4f4f;
     color: #fff;
     border: none;
     width: 32px;
     height: 32px;
-    border-radius: 7px; /* Круглая форма кнопки */
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 20px; /* Размер иконки крестика */
+    font-size: 20px;
     position: relative;
 }
 
 .delete-button::before {
-    content: "\00d7"; /* Unicode символ крестика */
+    content: "\00d7";
 }
 
 .delete-button:hover {
     background-color: #ff7878;
 }
 
-/* Кнопка галочки (иконка) */
 .reviewed-button {
     background-color: #4caf50;
     width: 32px;
@@ -1403,13 +1172,13 @@ h2 {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    position: absolute; /* Абсолютное позиционирование внутри блока */
-    top: 15px; /* Отступ от верхнего края */
-    right: 15px; /* Отступ от правого края */
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
 .reviewed-button::before {
-    content: "\2713"; /* Иконка галочки */
+    content: "\2713";
     color: #fff;
     font-size: 15px;
 }
@@ -1418,7 +1187,6 @@ h2 {
     background-color: #66bb6a;
 }
 
-/* Модальное окно */
 .modal {
     display: none;
     position: fixed;
@@ -1428,7 +1196,7 @@ h2 {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    overflow: auto; /* Добавлено для прокрутки содержимого модального окна */
+    overflow: auto;
 }
 
 .modal-content {
@@ -1440,10 +1208,9 @@ h2 {
     height: 60%;
     color: #fff;
     text-align: center;
-    overflow-y:auto;
+    overflow-y: auto;
 }
 
-/* Кнопки в модальном окне */
 .confirm-button,
 .cancel-button {
     background-color: #4caf50;
@@ -1481,28 +1248,24 @@ h2 {
     cursor: pointer;
 }
 
-/*-----------------------------------------------------------*/
-/* Контейнер для формы поиска */
 .search-container {
     display: flex;
-    justify-content: space-between; /* Распределяет пространство между элементами */
-    align-items: center; /* Выравнивание элементов по центру по вертикали */
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-/* Стиль для формы поиска */
 .search-msg {
     display: flex;
     align-items: center;
     position: relative;
     background-color: #333;
     border-radius: 5px;
-    flex-grow: 1; /* Позволяет форме занимать все доступное пространство */
+    flex-grow: 1;
 }
 
-/* Стиль для поля ввода поиска */
 .search-input {
-    width: 100%; /* Занимает всю доступную ширину формы */
+    width: 100%;
     padding: 8px;
     border: none;
     border-radius: 5px;
@@ -1512,12 +1275,10 @@ h2 {
     outline: none;
 }
 
-/* Скрываем плейсхолдер при наличии значения в поле */
 .search-input:focus::placeholder {
     opacity: 0;
 }
 
-/* Стиль для кнопки сброса внутри формы */
 .del-search-msg {
     background: none;
     border: none;
@@ -1525,15 +1286,13 @@ h2 {
     font-size: 20px;
     cursor: pointer;
     transition: color 0.3s ease;
-    margin-left: 10px; /* Пробел между полем ввода и кнопкой сброса */
+    margin-left: 10px;
 }
 
-/* Скрываем кнопку сброса по умолчанию и показываем при наведении */
 .search-msg:hover .del-search-msg {
     color: #ff4f4f;
 }
 
-/* Стиль для кнопки сброса за пределами формы */
 .delsearch {
     background-color: #ff4f4f;
     color: #fff;
@@ -1545,15 +1304,13 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 15px; /* Пробел между кнопкой сброса и кнопкой сброса вне формы */
+    margin-left: 15px;
 }
 
-/* Изменение цвета кнопки сброса при наведении */
 .delsearch:hover {
     background-color: #ff7878;
 }
-/*---------------------------------------------------------------------*/
-/* Основные стили для контейнера отзывов */
+
 .reviews-container {
     width: 70%;
     margin: 0 auto;
@@ -1563,7 +1320,6 @@ h2 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Заголовок отзывов */
 .review-title {
     text-align: center;
     color: #f0c674;
@@ -1571,58 +1327,53 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Основной стиль для тела */
 .page-body {
     background-color: #1e1e1e;
     font-family: 'Arial', sans-serif;
     color: #f5f5f5;
 }
 
-/* Контейнер для кнопок сортировки */
 .sort-buttons-container {
     display: flex;
-    justify-content: center; /* Центрирование кнопок по горизонтали */
-    gap: 10px; /* Промежуток между кнопками */
-    margin-bottom: 20px; /* Отступ снизу */
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-/* Общие стили для кнопок сортировки */
 .sort-button {
-    background-color: #f0c674; /* Желтый фон */
-    color: transparent; /* Прозрачный текст */
+    background-color: #f0c674;
+    color: transparent;
     border: none;
-    border-radius: 50%; /* Круглая форма */
+    border-radius: 50%;
     width: 40px;
     height: 40px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Тень для кнопок */
-    position: relative; /* Для псевдоэлементов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    position: relative;
     transition: transform 0.2s ease, background-color 0.3s;
 }
 
 .sort-button:hover {
-    background-color: #e0b060; /* Изменение цвета при наведении */
-    transform: scale(1.1); /* Легкое увеличение при наведении */
+    background-color: #e0b060;
+    transform: scale(1.1);
 }
 
 .sort-button:active {
-    transform: scale(0.9); /* Уменьшение при нажатии */
+    transform: scale(0.9);
 }
 
-/* Стрелки с использованием фоновых изображений */
 .sort-asc-button {
-    background-image: url('/admin/static/images/button1.png'); /* Угол вверх */
-    background-size: cover; /* Подгонка изображения под кнопку */
+    background-image: url('/admin/static/images/button1.png');
+    background-size: cover;
 }
 
 .sort-desc-button {
-    background-image: url('/admin/static/images/button2.png'); /* Угол вниз */
-    background-size: cover; /* Подгонка изображения под кнопку */
+    background-image: url('/admin/static/images/button2.png');
+    background-size: cover;
 }
-
 
 .arrow-up {
     display: inline-block;
@@ -1634,8 +1385,6 @@ h2 {
     transform: rotate(180deg);
 }
 
-
-/* Стили отзывов */
 .review-item {
     padding: 20px;
     background: rgba(255, 255, 255, 0.05);
@@ -1647,23 +1396,21 @@ h2 {
 }
 
 .user-review-info {
-    display: flex; /* Выравнивание аватара и информации в строку */
-    align-items: center; /* Центрирование по вертикали */
-    margin-bottom: 15px; /* Отступ снизу для отделения от отзыва */
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .user-avatar img {
-    border-radius: 50%; /* Круглая форма аватара */
-    margin-right: 20px; /* Отступ справа от аватара для информации */
+    border-radius: 50%;
+    margin-right: 20px;
 }
 
-.user-info {
-    /* Можно добавить дополнительные стили для user-info, если необходимо */
-}
+.user-info {}
 
 .user-info p {
-    color: #f0c674; /* Цвет текста информации о пользователе */
-    margin: 0; /* Убираем отступы между параграфами */
+    color: #f0c674;
+    margin: 0;
 }
 
 .user-message p {
@@ -1671,7 +1418,6 @@ h2 {
     font-size: 18px;
 }
 
-/* Админский ответ */
 .admin-reply {
     display: flex;
     margin-top: 10px;
@@ -1689,7 +1435,6 @@ h2 {
 .admin-details {
     margin-left: 15px;
 }
-
 
 .admin-name {
     font-weight: bold;
@@ -1709,8 +1454,6 @@ h2 {
     margin:0;
 }
 
-
-/* Кнопки удаления и отправки */
 .delete-button-review, .send-button {
     background-color: #e74c3c;
     color: white;
@@ -1739,23 +1482,20 @@ h2 {
     color: #bbb;
 }
 
-/* Стили для размытых фонов и градиентов */
 .reviews-list, .admin-reply {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(5px);
     border-radius: 0px;
 }
 
-/* Стили для <p class="pp"> */
 .pp {
-    color: #ffffff; /* Колір тексту, може бути змінено */
-    font-size: 1.2em; /* Збільшений розмір шрифту */
-    line-height: 1.5; /* Висота рядка для кращої читабельності */
-    padding: 5px; /* Внутрішні відступи */
-    border-left: 4px solid  #f0c674; /* Ліва рамка для акценту */
-    background: rgba(0, 0, 0, 0.2); /* Легкий темний фон для контрасту */
-    margin: 0; /* Убираем отступы */
-
+    color: #ffffff;
+    font-size: 1.2em;
+    line-height: 1.5;
+    padding: 5px;
+    border-left: 4px solid  #f0c674;
+    background: rgba(0, 0, 0, 0.2);
+    margin: 0;
 }
 
 .review-block {
@@ -1768,25 +1508,24 @@ h2 {
 }
 
 .star-rating {
-    display: flex; /* Выровнять звезды в одну строку */
-    margin-bottom: 10px; /* Отступ снизу, чтобы отделить звезды от отзыва */
+    display: flex;
+    margin-bottom: 10px;
 }
 
 .star {
-    font-size: 24px; /* Размер звезд */
-    color: #ccc; /* Цвет незаполненных звезд */
-    transition: color 0.3s ease; /* Плавный переход для анимации */
+    font-size: 24px;
+    color: #ccc;
+    transition: color 0.3s ease;
 }
 
 .star.filled {
-    color: #ffcc00; /* Цвет заполненных звезд */
+    color: #ffcc00;
 }
 
-/*------------------------------------*/
 .statistic-container {
     max-width: 800px;
     margin: auto;
-    background: #242424; /* Темний фон контейнера */
+    background: #242424;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     overflow: hidden;
@@ -1794,7 +1533,7 @@ h2 {
 }
 
 .statistic-online {
-    position: relative; /* Устанавливаем для родительского блока позиционирование */
+    position: relative;
     padding: 20px;
     background: #00796b;
     color: white;
@@ -1818,6 +1557,15 @@ h2 {
 
 .statistic-sort {
     margin-bottom: 15px;
+    padding: 20px;
+    background: #00796b;
+    color: white;
+}
+
+.statistic-sort p {
+    font-size: 18px;
+    color: #e0e0e0;
+    margin: 5px 0;
 }
 
 .sort-buttons {
@@ -1833,19 +1581,19 @@ h2 {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #009688; /* Бірюзовий фон кнопок */
+    background: #009688;
     color: white;
     cursor: pointer;
     transition: background 0.3s;
 }
 
 .sort-buttons input:hover {
-    background: #00796b; /* Темніший бірюзовий при наведенні */
+    background: #00796b;
 }
 
 .history-table {
     width: 100%;
-    border-collapse: collapse; /* Зливаючи кордони таблиці */
+    border-collapse: collapse;
     margin-top: 10px;
 }
 
@@ -1853,21 +1601,20 @@ h2 {
 .history-table td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #333; /* Темна лінія між рядками */
+    border-bottom: 1px solid #333;
 }
 
 .history-table th {
-    background: #00796b; /* Бірюзовий фон для заголовків */
-    color:#e0e0e0; /* Білий текст для заголовків */
+    background: #00796b;
+    color:#e0e0e0;
 }
 
 .history-table tr:hover {
-    background: #333; /* Підсвітка при наведенні на рядок */
+    background: #333;
 }
 
-
 .no-records {
-    color: #888; /* Світло-сірий текст для відсутності записів */
+    color: #888;
 }
 
 @keyframes fadeIn {
@@ -1878,10 +1625,11 @@ h2 {
         opacity: 1;
     }
 }
+
 .send-statistic {
-    position: absolute; /* Абсолютное позиционирование формы */
-    top: 25%; /* Отступ от верхнего края */
-    right: 10px; /* Отступ от правого края */
+    position: absolute;
+    top: 25%;
+    right: 10px;
 }
 
 .send-statistic input[type="submit"] {
@@ -1906,80 +1654,44 @@ h2 {
     background: #00675b;
     transform: translateY(1px);
 }
-/*---------------------------------------------------------*/
+
 .finance-container {
-    max-width: 800px;  /* Maximum width for the container */
-    margin: auto;      /* Center the container */
-    background: #242424;  /* Dark background */
-    border-radius: 10px;  /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);  /* Subtle shadow effect */
-    overflow: hidden;   /* Prevent content overflow */
-    animation: fadeIn 0.5s ease;  /* Fade-in animation */
-}
-
-.statistic-sort {
-    padding: 20px;     /* Add padding around the sorting section */
-    background: #00796b;  /* Teal background for the sorting section */
-    color: white;      /* White text color */
-    margin-bottom: 15px;  /* Space below the sorting section */
-}
-
-.statistic-sort p {
-    font-size: 18px;   /* Font size for the sorting title */
-    color: #e0e0e0;    /* Light gray color for the sorting text */
-    margin: 5px 0;    /* Margin around the sorting title */
-}
-
-.sort-buttons {
-    display: flex;     /* Flexbox for horizontal button layout */
-    gap: 10px;        /* Space between buttons */
-}
-
-.sort-buttons form {
-    margin: 0;        /* Remove default margin */
-}
-
-.sort-buttons input {
-    padding: 10px;    /* Padding inside buttons */
-    border: none;     /* Remove border */
-    border-radius: 5px;  /* Rounded corners for buttons */
-    background: #009688;  /* Teal background for buttons */
-    color: white;     /* White text color for buttons */
-    cursor: pointer;  /* Pointer cursor on hover */
-    transition: background 0.3s;  /* Smooth background color transition */
-}
-
-.sort-buttons input:hover {
-    background: #00796b;  /* Darker teal on hover */
+    max-width: 800px;
+    margin: auto;
+    background: #242424;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease;
 }
 
 .finance-list {
-    padding: 20px;    /* Padding around the finance list */
-    color: #e0e0e0;    /* Light gray text color */
+    padding: 20px;
+    color: #e0e0e0;
 }
 
 .finance-list ul {
-    list-style-type: none;  /* Remove default list styling */
-    padding: 0;             /* Remove padding */
+    list-style-type: none;
+    padding: 0;
 }
 
 .finance-list li {
-    margin: 5px 0;          /* Space between list items */
+    margin: 5px 0;
 }
 
 h2 {
-    font-size: 24px;      /* Font size for the chart title */
-    color: #e0e0e0;       /* Light gray color for the title */
-    margin-top: 0;        /* Remove top margin */
-    text-align: center;   /* Center the title */
+    font-size: 24px;
+    color: #e0e0e0;
+    margin-top: 0;
+    text-align: center;
 }
 
 canvas {
-    margin-top: 30px;    /* Space above the chart */
-    width: 100%;         /* Full width for the chart */
+    margin-top: 30px;
+    width: 100%;
 }
 
-/* Animation for fade-in effect */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -1988,92 +1700,79 @@ canvas {
         opacity: 1;
     }
 }
-/*---------------------------------------------------*/
-/* Контейнер заголовка */
 .h1-container {
     display: flex;
-    width: 50%; /* Ширина контейнера */
-    margin: 0 auto; /* Центрирование контейнера */
-    justify-content: space-between; /* Разделяет элементы по краям */
-    align-items: center; /* Вертикальное центрирование элементов */
-    padding: 15px 20px; /* Отступы вокруг контейнера */
-    background-color: #2a2a2a; /* Темный фон */
-    border-bottom: 2px solid #444; /* Нежная разделительная линия */
+    width: 50%;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #2a2a2a;
+    border-bottom: 2px solid #444;
 }
 
-
-/* Ячейки */
 .cell {
-    flex: 1; /* Все ячейки занимают равное пространство */
+    flex: 1;
 }
 
-/* Кнопка "Назад" */
 .back-button {
     display: flex;
-    align-items: center; /* Вертикальное центрирование иконки и текста */
-    text-decoration: none; /* Убирает подчеркивание */
-    color: #42a5f5; /* Цвет текста кнопки */
-    font-size: 1.1em; /* Увеличенный размер шрифта */
-    transition: color 0.3s; /* Плавный переход цвета */
+    align-items: center;
+    text-decoration: none;
+    color: #42a5f5;
+    font-size: 1.1em;
+    transition: color 0.3s;
 }
 
 .back-button:hover {
-    color: #1e88e5; /* Цвет при наведении */
+    color: #1e88e5;
 }
 
 .back-button svg {
-    margin-right: 8px; /* Отступ между иконкой и текстом */
-    fill: currentColor; /* Заполнение иконки цветом текста */
+    margin-right: 8px;
+    fill: currentColor;
 }
 
-/* Заголовок */
 .h1-contact {
-    font-size: 1.5em; /* Размер шрифта заголовка */
-    color: #ffffff; /* Цвет заголовка */
-    text-align: center; /* Центрирование текста */
-    margin: 0; /* Убирает стандартные отступы */
+    font-size: 1.5em;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
 }
 
-/* Права ячейка (может быть использована для кнопок или иконок) */
 .cell.right {
-    display: flex; /* Позволяет размещать элементы внутри ячейки */
-    justify-content: flex-end; /* Выравнивание по правому краю */
+    display: flex;
+    justify-content: flex-end;
 }
 
-/*---------------------------------------------------*/
-/* Основной контейнер чата */
 .chat-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     background-color: #333333;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    overflow-y: auto; /* Добавлен скроллинг при переполнении */
+    overflow-y: auto;
 }
 
-/* Блоки сообщений */
 .support-message {
     display: flex;
     margin-bottom: 15px;
-
-
 }
 
 .user-message .message-content {
     display: flex;
     align-items: flex-start;
     max-width: 80%;
-    margin-left: 0; /* Сообщения пользователя слева */
+    margin-left: 0;
 }
 
 .admin-message .message-content {
     display: flex;
     align-items: flex-start;
     max-width: 80%;
-    margin-left: auto; /* Сообщения администратора справа */
+    margin-left: auto;
 }
 
-/* Текст сообщения */
 .message-text {
     background-color: #2a2a2a;
     border-radius: 8px;
@@ -2087,26 +1786,26 @@ canvas {
 }
 
 .user-message .message-text {
-    background-color: #3949ab; /* Темно-синий акцент для пользователя */
-
+    background-color: #3949ab;
     color: #ffffff;
 }
 
 .admin-message .message-text {
-    background-color: #333; /* Серый фон для администратора */
+    background-color: #333;
     font-size:16px;
     color: #f1f1f1;
 }
 
 .message-text .name {
     font-weight: bold;
-    color: #80cbc4; /* Акцентный голубой для имени администратора */
+    color: #80cbc4;
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .message-text .admin-name {
     font-weight: bold;
-    color: #F2CC08; /* Акцентный голубой для имени администратора */
+    color: #F2CC08;
     margin-bottom: 5px;
 }
 
@@ -2122,22 +1821,19 @@ canvas {
     font-size:16px;
 }
 
-/* Аватар пользователя */
 .contact-user-avatar img {
-    width: 40px; /* Уменьшен размер аватарки */
+    width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 10px; /* Отступ справа для аватарки */
+    margin-right: 10px;
 }
 
-/* Разделитель */
 .message-divider {
     border: none;
     border-top: 1px solid #555;
     margin: 15px 0;
 }
 
-/* Форма для ввода сообщения */
 .message-form {
     display: flex;
     flex-direction: column;
@@ -2166,7 +1862,7 @@ canvas {
 }
 
 .message-input:focus {
-    border-color: #42a5f5; /* Голубой акцент при фокусе */
+    border-color: #42a5f5;
     box-shadow: 0 0 5px rgba(66, 165, 245, 0.5);
 }
 
@@ -2174,7 +1870,7 @@ canvas {
     padding: 12px;
     font-size: 1em;
     border: none;
-    background-color: #42a5f5; /* Голубой фон кнопки */
+    background-color: #42a5f5;
     color: #ffffff;
     border-radius: 8px;
     cursor: pointer;
@@ -2182,92 +1878,74 @@ canvas {
 }
 
 .contact-chat-submit-button:hover {
-    background-color: #1e88e5; /* Цвет при наведении */
+    background-color: #1e88e5;
     transform: translateY(-2px);
 }
 
 .contact-chat-submit-button:active {
     transform: translateY(0);
 }
-/* Стиль формы ответа на чат поддержки */
+
 .reply_support_chat {
-    display: flex; /* Используем flexbox для выравнивания */
-    flex-direction: column; /* Вертикальное расположение элементов */
-    width: 50%; /* Ширина формы */
-    margin: 0 auto; /* Центрирование формы с отступом сверху и снизу */
-    padding: 20px; /* Отступы внутри формы */
-    background-color: #2a2a2a; /* Темный синий фон формы */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Нежная тень */
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Стиль для текстового поля ввода сообщения */
 .reply_support_chat input[type="text"] {
-    padding: 10px; /* Внутренние отступы */
-    border: 2px solid #444; /* Темная рамка */
-    border-radius: 8px; /* Закругленные углы */
-    margin-bottom: 10px; /* Отступ снизу */
-    font-size: 1em; /* Размер шрифта */
-    color: #ffffff; /* Цвет текста */
-    background-color: #2a2a2a; /* Темный фон текстового поля */
+    padding: 10px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #2a2a2a;
 }
 
-/* Стиль для кнопки отправки */
 .reply_support_chat input[type="submit"] {
-    padding: 10px; /* Внутренние отступы */
-    font-size: 1em; /* Размер шрифта */
-    border: none; /* Убираем стандартную рамку */
-    background-color: #007bff; /* Синий фон кнопки */
-    color: #ffffff; /* Белый текст на кнопке */
-    border-radius: 8px; /* Закругленные углы */
-    cursor: pointer; /* Курсор указывает на интерактивность */
-    transition: background-color 0.3s, transform 0.2s; /* Плавный переход */
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Стиль для текстового поля ввода сообщения */
-.reply_support_chat input[type="text"] {
-    padding: 10px; /* Внутренние отступы */
-    border: 2px solid #444; /* Темная рамка */
-    border-radius: 8px; /* Закругленные углы */
-    margin-bottom: 10px; /* Отступ снизу */
-    font-size: 1em; /* Размер шрифта */
-    color: #ffffff; /* Цвет текста */
-    background-color: #2a2a2a; /* Темный фон текстового поля */
-}
-
-/* Стиль для текстового поля при наведении */
 .reply_support_chat input[type="text"]:hover {
-    border-color: #0056b3; /* Цвет рамки при наведении */
+    border-color: #0056b3;
 }
 
-/* Стиль для текстового поля при фокусе */
 .reply_support_chat input[type="text"]:focus {
-    border-color: #0056b3; /* Цвет рамки при фокусе */
-    outline: none; /* Убираем стандартное выделение */
-    box-shadow: 0 0 5px rgba(0, 87, 179, 0.5); /* Легкая тень для выделения */
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 87, 179, 0.5);
 }
 
-/* Стиль для текстового поля при активации (если необходимо) */
 .reply_support_chat input[type="text"]:active {
-    border-color: #0056b3; /* Цвет рамки при активации */
+    border-color: #0056b3;
 }
 
 .reply_support_chat input[type="submit"]:hover {
-    background-color: #0056b3; /* Темно-синий цвет при наведении */
-    transform: translateY(-2px); /* Эффект при наведении */
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .reply_support_chat input[type="submit"]:active {
-    transform: translateY(0); /* Эффект нажатия */
+    transform: translateY(0);
 }
-/*------------------------------------------*/
-/* Центрирование блока на экране */
+
 .center-screen {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Стиль для контейнера с изображением и заголовком */
 .header-container {
     display: flex;
     align-items: center;
@@ -2276,7 +1954,6 @@ canvas {
     border-radius: 10px;
 }
 
-/* Стили для заголовка */
 .header-container h1 {
     font-size: 2rem;
     font-weight: bold;
@@ -2284,13 +1961,10 @@ canvas {
     color: #fff;
 }
 
-/* Стили для изображения */
 .header-container img {
     border-radius: 10px;
 }
 
-/*--------------------------*/
-/* Общие стили для контейнера */
 .href-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -2298,7 +1972,6 @@ canvas {
     padding: 20px;
 }
 
-/* Общий стиль для кнопок-блоков */
 .block-href {
     position: relative;
     display: flex;
@@ -2319,7 +1992,6 @@ canvas {
     color: inherit;
 }
 
-/* Изображение слева */
 .block-href img {
     width: 60%px;
     margin-left:5%;
@@ -2328,7 +2000,6 @@ canvas {
     border-radius: 15px 0 0 15px;
 }
 
-/* Контент с текстом справа */
 .text-content {
     padding: 20px;
     display: flex;
@@ -2339,14 +2010,12 @@ canvas {
     overflow: hidden;
 }
 
-/* Заголовок ссылки */
 .text-content h2 {
     margin: 0;
     font-size: 1.5rem;
     transition: transform 0.3s ease;
 }
 
-/* Описание ссылки - изначально скрыто */
 .text-content .description {
     opacity: 0;
     margin-left:10%;
@@ -2356,22 +2025,20 @@ canvas {
     color: #e0e0e0;
 }
 
-/* Эффект при наведении */
 .block-href:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .block-href:hover h2 {
-    transform: translateY(-20px); /* Поднимаем заголовок */
+    transform: translateY(-20px);
 }
 
 .block-href:hover .description {
-    opacity: 1; /* Показываем описание */
+    opacity: 1;
     transform: translateY(0);
 }
 
-/* Уникальные стили для каждого блока */
 .block-href-visits {
     background: linear-gradient(135deg, #4facfe, #00f2fe);
 }
@@ -2380,7 +2047,6 @@ canvas {
     background: linear-gradient(135deg, #f093fb, #f5576c);
 }
 
-/*--------------------------------------------*/
 .special-offers-container {
     display: flex;
     justify-content: space-between;
@@ -2394,6 +2060,7 @@ canvas {
     margin-right: 1rem;
     max-width: 50%;
 }
+
 .special-card-title {
     font-size: 16px;
     margin-bottom: 0.5rem;
@@ -2422,7 +2089,6 @@ canvas {
     transition: transform 0.3s, box-shadow 0.3s;
     max-width:110px;
 }
-
 
 .special-card:hover {
     transform: translateY(-5px);
@@ -2484,6 +2150,7 @@ canvas {
 .next {
     right: 5px;
 }
+
 .remove-discount-dish {
     position: absolute;
     top: 5px;
@@ -2500,18 +2167,14 @@ canvas {
 }
 
 .remove-discount-dish input[type="submit"]:hover {
-    color: #ff4c4c; /* Яркий цвет при наведении для акцента */
+    color: #ff4c4c;
 }
 
-/*------------------------------------------*/
-
-
-/* Стили для кнопок вызова модальных окон */
 .editor-buttons {
-    display: flex;                /* Используем flexbox */
-    justify-content: center;      /* Центрируем кнопки по горизонтали */
-    align-items: center;          /* Центрируем кнопки по вертикали (если высота блока позволяет) */
-    flex-wrap: wrap;             /* Разрешаем перенос кнопок на новую строку при необходимости */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .editor-buttons button {
@@ -2528,7 +2191,6 @@ canvas {
     background-color: #444;
 }
 
-/* Стили для модального окна */
 .modal {
     display: none;
     position: fixed;
@@ -2559,7 +2221,6 @@ canvas {
     cursor: pointer;
 }
 
-/* Стили сетки для блюд */
 .dish-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -2615,10 +2276,6 @@ canvas {
     border-radius: 4px;
 }
 
-/* Анимация модального окна */
 .modal.show {
     display: flex;
 }
-
-
-
